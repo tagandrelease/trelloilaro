@@ -13,4 +13,4 @@ project/plugins/project/
 .scala_dependencies
 .idea/
 .idea_modules/
-src/resources/trello.conf
+src/main/resources/trello.conf
