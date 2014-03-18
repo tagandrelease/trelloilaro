@@ -1,6 +1,6 @@
 package pl.pej.trelloilaro.api.request.builder
 
-import pl.pej.trelloilaro.api.request.{RequestParam, RequestBuilder}
+import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
 trait ActionRequestBuilder { this: RequestBuilder =>
 
@@ -11,6 +11,7 @@ trait ActionRequestBuilder { this: RequestBuilder =>
 trait ActionParam extends RequestParam
 
 object ActionRequestBuilder {
+  case object all extends ActionParam with AllRequestParam
   case object addAttachmentToCard extends ActionParam
   case object addChecklistToCard extends ActionParam
   case object addMemberToBoard extends ActionParam

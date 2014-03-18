@@ -7,6 +7,7 @@ package pl.pej.trelloilaro.api.request
   *
   */
 trait RequestParam
+trait AllRequestParam
 
 /** Builder for the requests. Accumulates the request string.
   * @param url currently stored formated arguments
@@ -17,8 +18,25 @@ case class RequestBuilder(url: String) {
   override def toString: String = url
 }
 
-
-
 object RequestBuilder {
-  def apply(url: String, argument: String, params: Seq[RequestParam]): RequestBuilder = RequestBuilder(s"$url&$argument=${params.distinct.mkString(",")}")
+
+  /** Constructor for standard enumeration
+    *
+    * @param url url prefix
+    * @param argument api argument name
+    * @param params enumerations for the value
+    * @return
+    */
+  def apply(url: String, argument: String, params: Seq[RequestParam]): RequestBuilder = {
+
+    val argumentList =
+      if(params.exists(p => p.isInstanceOf[AllRequestParam])) "all"
+      else params.distinct.mkString(",")
+
+    RequestBuilder(s"$url&$argument=$argumentList")
+  }
+
+  def apply(url: String, argument: String, value: Boolean): RequestBuilder = RequestBuilder(s"$url&$argument=${value.toString}")
+  def apply(url: String, argument: String, value: Int): RequestBuilder = RequestBuilder(s"$url&$argument=${value.toString}")
 }
+
