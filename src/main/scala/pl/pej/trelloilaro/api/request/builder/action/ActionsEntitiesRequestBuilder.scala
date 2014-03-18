@@ -1,4 +1,4 @@
-package pl.pej.trelloilaro.api.request.builder
+package pl.pej.trelloilaro.api.request.builder.action
 
 import pl.pej.trelloilaro.api.request.{RequestParam, RequestBuilder}
 

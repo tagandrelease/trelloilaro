@@ -1,5 +1,9 @@
 package pl.pej.trelloilaro.api.request
 
+import pl.pej.trelloilaro.api.request.builder.board.{BoardsBuilder, BoardFieldsBuilder}
+import pl.pej.trelloilaro.api.request.builder.card._
+import pl.pej.trelloilaro.api.request.builder.action._
+
 /** One possible value for an argument.
   *
   * eg: https://api.(...)list_fields=name&fields=name,desc&key=(...)
@@ -14,11 +18,17 @@ trait AllRequestParam
   *
   * TODO: store unformatted args and format on final call
   */
-case class RequestBuilder(url: String) {
+case class RequestBuilder(url: String) extends BoardBuilders with CardBuilders with ActionBuilders {
   override def toString: String = url
 }
 
+trait BoardBuilders extends BoardFieldsBuilder with BoardsBuilder { this: RequestBuilder => }
+trait CardBuilders extends CardAttachmentFieldsBuilder with CardAttachmentsBuilder with CardFieldsBuilder with CardMemberFieldsBuilder with CardsBuilder with CardStickersBuilder { this: RequestBuilder => }
+trait ActionBuilders extends ActionFieldsBuilder with ActionBuilder with ActionsEntitiesRequestBuilder with ActionBeforeBuilder with ActionSinceBuilder with ActionsLimitBuilder { this: RequestBuilder => }
+
 object RequestBuilder {
+
+  RequestBuilder("asdf").withAction()
 
   /** Constructor for standard enumeration
     *
@@ -38,5 +48,5 @@ object RequestBuilder {
 
   def apply(url: String, argument: String, value: Boolean): RequestBuilder = RequestBuilder(s"$url&$argument=${value.toString}")
   def apply(url: String, argument: String, value: Int): RequestBuilder = RequestBuilder(s"$url&$argument=${value.toString}")
+  def apply(url: String, argument: String, value: String): RequestBuilder = RequestBuilder(s"$url&$argument=${value}")
 }
-
