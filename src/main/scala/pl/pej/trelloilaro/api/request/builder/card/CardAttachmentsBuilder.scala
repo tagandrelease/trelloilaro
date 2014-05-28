@@ -4,7 +4,7 @@ import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBui
 
 trait CardAttachmentsBuilder { this: RequestBuilder =>
 
-  def withCardAttachments(attachment: Boolean) = RequestBuilder(url, "card_attachments", attachment)
+  def withCardAttachments(attachment: Boolean) = cp(url, "card_attachments", attachment)
 
-  def withCardAttachmentsCoverOnly = RequestBuilder(url, "card_attachments", "cover")
+  def withCardAttachmentsCoverOnly = cp(url, "card_attachments", "cover")
 }

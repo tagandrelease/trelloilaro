@@ -4,7 +4,7 @@ import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBui
 
 trait ActionBuilder { this: RequestBuilder =>
 
-  def withAction(actions: ActionParam*) = RequestBuilder(url, "action", actions)
+  def withAction(actions: ActionParam*) = cp(url, "action", actions)
 
 }
 

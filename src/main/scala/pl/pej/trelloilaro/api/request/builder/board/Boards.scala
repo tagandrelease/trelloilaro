@@ -5,7 +5,7 @@ import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBui
 trait BoardsBuilder {
   this: RequestBuilder =>
 
-  def withBoards(boards: BoardsParam *) = RequestBuilder(url, "boards", boards)
+  def withBoards(boards: BoardsParam *) = cp(url, "boards", boards)
 
 }
 

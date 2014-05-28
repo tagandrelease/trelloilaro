@@ -40,7 +40,11 @@ object Dependencies {
 //  val typesafeConfig = "com.typesafe" % "config" % "1.0.2"
   val scalaTest = "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
 
-  def list = List(sprayClient, sprayJson, ficus, scalaTest) ++ akka
+  val logger = Seq(
+    "org.clapper" %% "grizzled-slf4j" % "1.0.2",
+    "ch.qos.logback" % "logback-classic" % "1.1.2")
+
+  def list = List(sprayClient, sprayJson, ficus, scalaTest) ++ akka ++ logger
 }
 
 object TrelloilaroBuild extends Build {

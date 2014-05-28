@@ -6,7 +6,7 @@ import pl.pej.trelloilaro.api.request.builder.DateParam
 
 trait ActionSinceBuilder { this: RequestBuilder =>
 
-  def withActionSince(params: ActionSinceParam*) = RequestBuilder(url, "action_since", params)
+  def withActionSince(params: ActionSinceParam*) = cp(url, "action_since", params)
 }
 
 trait ActionSinceParam extends RequestParam
@@ -19,7 +19,7 @@ object ActionSinceBuilder {
 
 trait ActionBeforeBuilder { this: RequestBuilder =>
 
-def withActionBefore(params: ActionBeforeParam*) = RequestBuilder(url, "action_since", params)
+def withActionBefore(params: ActionBeforeParam*) = cp(url, "action_since", params)
 }
 
 trait ActionBeforeParam extends RequestParam

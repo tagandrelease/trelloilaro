@@ -5,7 +5,7 @@ import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBui
 trait CardsBuilder {
   this: RequestBuilder =>
 
-  def withCards(card: CardsParam) = RequestBuilder(url, "cards", card::Nil)
+  def withCards(card: CardsParam) = cp(url, "cards", card::Nil)
 
 }
 
