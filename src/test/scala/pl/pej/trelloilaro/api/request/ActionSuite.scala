@@ -1,27 +1,26 @@
 package pl.pej.trelloilaro.api.request
 
 import org.scalatest.FunSuite
-import pl.pej.trelloilaro.api.request.builder.action.{ActionFieldsRequestBuilder, ActionFieldsBuilder, ActionBuilder}
-import ActionBuilder.updateBoard
+import pl.pej.trelloilaro.api.request.builder.action.{Fields, Actions}
 
 class ActionSuite extends FunSuite {
 
-  val builder = ActionRequestBuilder("URL")
+  val builder = ActionRequestBuilder("URL", Map())
   test("ActionBuilder") {
 
-    val newUrl = builder.withAction(updateBoard, ActionBuilder.addMemberToCard)
+    val newUrl = builder.actions(Actions.updateBoard ).actions(Actions.addMemberToCard)
 
-    assert(newUrl.toString === "URL&action=updateBoard,addMemberToCard")
+    assert(newUrl.toString === "URL&action=addMemberToCard,updateBoard")
   }
 
   test("ActionFields") {
-    val newUrl = builder.withActionFields(ActionFieldsRequestBuilder.data, ActionFieldsRequestBuilder.date)
+    val newUrl = builder.fields(Fields.data, Fields.date)
 
     assert(newUrl.toString === "URL&action_fields=data,date")
   }
 
   test("ActionEntities") {
-    val newUrl = builder.withActionsEntities(true)
+    val newUrl = builder.withEntities(true)
 
     assert(newUrl.toString === "URL&entities=true")
   }

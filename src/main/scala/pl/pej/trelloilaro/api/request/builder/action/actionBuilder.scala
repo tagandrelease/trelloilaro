@@ -1,16 +1,16 @@
 package pl.pej.trelloilaro.api.request.builder.action
 
-import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
+import pl.pej.trelloilaro.api.request.{ActionRequestBuilder, AllRequestParam, RequestParam, RequestBuilder}
 
-trait ActionBuilder { this: RequestBuilder =>
+trait ActionBuilder { this: ActionRequestBuilder =>
 
-  def withAction(actions: ActionParam*) = cp(url, "action", actions)
+  def actions(actions: ActionParam*): ActionRequestBuilder = withParams("action", actions)
 
 }
 
 trait ActionParam extends RequestParam
 
-object ActionBuilder {
+object Actions {
   case object all extends ActionParam with AllRequestParam
   case object addAttachmentToCard extends ActionParam
   case object addChecklistToCard extends ActionParam

@@ -2,9 +2,9 @@ package pl.pej.trelloilaro.api.request.builder.board
 
 import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait BoardFieldsBuilder { this: RequestBuilder =>
+trait BoardFieldsBuilder { this: RequestBuilder[_] =>
 
-  def withBoardFields(fields: BoardFieldsParam *) = cp(url, "board_fields", fields)
+  def withBoardFields(fields: BoardFieldsParam *) = withParams("board_fields", fields)
 
 }
 

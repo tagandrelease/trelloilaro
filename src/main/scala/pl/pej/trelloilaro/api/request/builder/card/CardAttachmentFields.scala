@@ -2,9 +2,9 @@ package pl.pej.trelloilaro.api.request.builder.card
 
 import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait CardAttachmentFieldsBuilder { this: RequestBuilder =>
+trait CardAttachmentFieldsBuilder { this: RequestBuilder[_] =>
 
-  def withCardAttachmentFields(fields: CardAttachmentFieldsParam *) = cp(url, "card_attachment_fields", fields)
+  def withCardAttachmentFields(fields: CardAttachmentFieldsParam *) = withParams("card_attachment_fields", fields)
 
 }
 

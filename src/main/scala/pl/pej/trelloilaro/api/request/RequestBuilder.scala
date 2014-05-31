@@ -14,39 +14,54 @@ trait RequestParam
 trait AllRequestParam
 
 /** Builder for the requests. Accumulates the request string.
-  * @param url currently stored formated arguments
   *
   * TODO: store unformatted args and format on final call
   */
-abstract class RequestBuilder  { this: { def copy(s: String): RequestBuilder } =>
-  def url: String
-  override def toString: String = url
+abstract class RequestBuilder[T](prefix: String, params: Map[String, List[String]])  { this: { def construct(param: String, value: Map[String, List[String]]): T} =>
 
-  /** Constructor for standard enumeration
-    *
-    * @param url url prefix
-    * @param argument api argument name
-    * @param params enumerations for the value
-    * @return
-    */
-  def cp(url: String, argument: String, params: Seq[RequestParam]): RequestBuilder = {
+  override def toString: String = prefix + "&" + params.map{ case (k,v) =>
+    s"$k=${v.mkString(",")}"
+  }.toList.sorted.mkString("&")
 
-    val argumentList =
-      if(params.exists(p => p.isInstanceOf[AllRequestParam])) "all"
-      else params.distinct.mkString(",")
 
-    copy(s"$url&$argument=$argumentList")
+  def withParam(paramName: String, value: Boolean): T = withParam(paramName, value.toString)
+  def withParam(paramName: String, value: Int): T = withParam(paramName, value.toString)
+  def withParam(paramName: String, value: String): T = withStringParam(paramName, List(value))
+
+  def withParams(paramName: String, values: Seq[RequestParam]): T = {
+
+    val stringValues =
+      if(values.exists(p => p.isInstanceOf[AllRequestParam])) List("all")
+      else values.distinct.map(_.toString)
+
+    withStringParam(paramName, stringValues)
   }
 
-  def cp(url: String, argument: String, value: Boolean): RequestBuilder = copy(s"$url&$argument=${value.toString}")
-  def cp(url: String, argument: String, value: Int): RequestBuilder = copy(s"$url&$argument=${value.toString}")
-  def cp(url: String, argument: String, value: String): RequestBuilder = copy(s"$url&$argument=${value}")
+  //TODO rename
+  private def withStringParam(paramName: String, values: Seq[String]): T = {
+
+    val oldParams = params.get(paramName)
+
+    val newParams: List[String] = oldParams match {
+      case None => values.toList
+
+      case Some(old) => // need to join params
+        (old ++ values).distinct.sorted
+    }
+
+    construct(prefix, params.updated(paramName, newParams))
+  }
 }
 
-case class BoardRequestBuilder(url: String) extends RequestBuilder with BoardFieldsBuilder with BoardsBuilder
-case class CardRequestBuilder(url: String) extends RequestBuilder with CardAttachmentFieldsBuilder with CardAttachmentsBuilder with CardFieldsBuilder with CardMemberFieldsBuilder with CardsBuilder with CardStickersBuilder
-case class ActionRequestBuilder(url: String) extends RequestBuilder with ActionFieldsBuilder with ActionBuilder with ActionsEntitiesRequestBuilder with ActionBeforeBuilder with ActionSinceBuilder with ActionsLimitBuilder
-
-object RequestBuilder {
-
+case class BoardRequestBuilder(prefix: String, params: Map[String, List[String]]) extends RequestBuilder[BoardRequestBuilder](prefix, params)
+            with BoardFieldsBuilder with BoardsBuilder {
+  def construct(prefix: String, params: Map[String,List[String]]) = BoardRequestBuilder(prefix, params)
+}
+case class CardRequestBuilder(prefix: String, params: Map[String, List[String]]) extends RequestBuilder[CardRequestBuilder](prefix, params)
+           with CardAttachmentFieldsBuilder with CardAttachmentsBuilder with CardFieldsBuilder with CardMemberFieldsBuilder with CardsBuilder with CardStickersBuilder {
+  def construct(prefix: String, params: Map[String,List[String]]) = CardRequestBuilder(prefix, params)
+}
+case class ActionRequestBuilder(prefix: String, params: Map[String, List[String]]) extends RequestBuilder[ActionRequestBuilder](prefix, params)
+           with FieldBuilder with ActionBuilder with EntitiesBuilder with BeforeBuilder with SinceBuilder with LimitBuilder{
+  def construct(prefix: String, params: Map[String,List[String]]) = ActionRequestBuilder(prefix, params)
 }

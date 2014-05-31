@@ -2,15 +2,15 @@ package pl.pej.trelloilaro.api.request.builder.action
 
 import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait ActionFieldsBuilder { this: RequestBuilder =>
+trait FieldBuilder { this: RequestBuilder[_] =>
 
-  def withActionFields(actions: ActionFieldsParam*) = cp(url, "action_fields", actions)
+  def fields(actions: ActionFieldsParam*) = withParams("action_fields", actions)
 
 }
 
 trait ActionFieldsParam extends RequestParam
 
-object ActionFieldsRequestBuilder {
+object Fields {
   case object all extends ActionFieldsParam with AllRequestParam
   case object idMemberCreator extends ActionFieldsParam
   case object data extends ActionFieldsParam
