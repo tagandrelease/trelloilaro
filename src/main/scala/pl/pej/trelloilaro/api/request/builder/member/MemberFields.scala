@@ -6,8 +6,16 @@ trait ActionMemberCreatorFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withActionMemberCreatorFields(fields: MemberField *) = withParams("action_memberCreator_fields", fields)
 }
 
+trait CardMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
+
+  def withCardMemberFields(fields: MemberField*) = withParams("card_member_fields", fields)
+}
+
 trait MemberFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withMemberFields(fields: MemberField *) = withParams("member_fields", fields)
+}
+trait ActionMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
+  def withActionMemberFields(fields: MemberField *) = withParams("action_member_fields", fields)
 }
 
 trait MemberField extends RequestParam

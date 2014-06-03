@@ -2,38 +2,38 @@ package pl.pej.trelloilaro.api.request.builder.card
 
 import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait CardFieldsBuilder { this: RequestBuilder[_] =>
+trait CardFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withCardFields(cardFields: CardFieldsParam *) = withParams("card_fields", cardFields)
+  def withCardFields(cardFields: CardField *) = withParams("card_fields", cardFields)
 
 }
 
-trait CardFieldsParam extends RequestParam
+trait CardField extends RequestParam
 
-object CardFieldsRequestBuilder {
-  case object all extends CardFieldsParam with AllRequestParam
+object CardField {
+  case object all extends CardField with AllRequestParam
 
-  case object badges extends CardFieldsParam
-  case object checkItemStates extends CardFieldsParam
-  case object closed extends CardFieldsParam
-  case object dateLastActivity extends CardFieldsParam
-  case object desc extends CardFieldsParam
-  case object descData extends CardFieldsParam
-  case object due extends CardFieldsParam
-  case object idBoard extends CardFieldsParam
-  case object idChecklists extends CardFieldsParam
-  case object idList extends CardFieldsParam
-  case object idMembers extends CardFieldsParam
-  case object idMembersVoted extends CardFieldsParam
-  case object idShort extends CardFieldsParam
-  case object idAttachmentCover extends CardFieldsParam
-  case object manualCoverAttachment extends CardFieldsParam
-  case object labels extends CardFieldsParam
-  case object name extends CardFieldsParam
-  case object pos extends CardFieldsParam
-  case object shortLink extends CardFieldsParam
-  case object shortUrl extends CardFieldsParam
-  case object subscribed extends CardFieldsParam
-  case object url extends CardFieldsParam
+  case object badges extends CardField
+  case object checkItemStates extends CardField
+  case object closed extends CardField
+  case object dateLastActivity extends CardField
+  case object desc extends CardField
+  case object descData extends CardField
+  case object due extends CardField
+  case object idBoard extends CardField
+  case object idChecklists extends CardField
+  case object idList extends CardField
+  case object idMembers extends CardField
+  case object idMembersVoted extends CardField
+  case object idShort extends CardField
+  case object idAttachmentCover extends CardField
+  case object manualCoverAttachment extends CardField
+  case object labels extends CardField
+  case object name extends CardField
+  case object pos extends CardField
+  case object shortLink extends CardField
+  case object shortUrl extends CardField
+  case object subscribed extends CardField
+  case object url extends CardField
 
 }

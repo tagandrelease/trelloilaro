@@ -2,19 +2,18 @@ package pl.pej.trelloilaro.api.request.builder.card
 
 import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait CardsBuilder {
-  this: RequestBuilder[_] =>
+trait CardsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withCards(card: CardsParam) = withParams("cards", card::Nil)
+  def withCards(card: Card) = withOnlyParam("cards", card)
 
 }
 
-trait CardsParam extends RequestParam
+trait Card extends RequestParam
 
-object CardsRequestBuilder {
-  case object all extends CardsParam
-  case object none extends CardsParam
-  case object visible extends CardsParam
-  case object open extends CardsParam
-  case object closed extends CardsParam
+object Card {
+  case object all extends Card
+  case object none extends Card
+  case object visible extends Card
+  case object open extends Card
+  case object closed extends Card
 }

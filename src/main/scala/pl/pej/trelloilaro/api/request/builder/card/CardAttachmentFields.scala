@@ -2,23 +2,23 @@ package pl.pej.trelloilaro.api.request.builder.card
 
 import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait CardAttachmentFieldsBuilder { this: RequestBuilder[_] =>
+trait CardAttachmentFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withCardAttachmentFields(fields: CardAttachmentFieldsParam *) = withParams("card_attachment_fields", fields)
+  def withCardAttachmentFields(fields: CardAttachmentField *) = withParams("card_attachment_fields", fields)
 
 }
 
-trait CardAttachmentFieldsParam extends RequestParam
+trait CardAttachmentField  extends RequestParam
 
-object CardAttachmentFieldsRequestBuilder {
-  case object all extends CardAttachmentFieldsParam with AllRequestParam
-  case object bytes extends CardAttachmentFieldsParam
-  case object date extends CardAttachmentFieldsParam
-  case object edgeColor extends CardAttachmentFieldsParam
-  case object idMember extends CardAttachmentFieldsParam
-  case object isUpload extends CardAttachmentFieldsParam
-  case object mimeType extends CardAttachmentFieldsParam
-  case object name extends CardAttachmentFieldsParam
-  case object previews extends CardAttachmentFieldsParam
-  case object url extends CardAttachmentFieldsParam
+object CardAttachmentField {
+  case object all extends CardAttachmentField with AllRequestParam
+  case object bytes extends CardAttachmentField
+  case object date extends CardAttachmentField
+  case object edgeColor extends CardAttachmentField
+  case object idMember extends CardAttachmentField
+  case object isUpload extends CardAttachmentField
+  case object mimeType extends CardAttachmentField
+  case object name extends CardAttachmentField
+  case object previews extends CardAttachmentField
+  case object url extends CardAttachmentField
 }
