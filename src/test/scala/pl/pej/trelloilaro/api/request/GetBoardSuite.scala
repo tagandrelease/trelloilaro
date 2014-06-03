@@ -6,10 +6,15 @@ import pl.pej.trelloilaro.api.request.builder.action.ActionFormat.list
 import pl.pej.trelloilaro.api.request.builder.action.ActionSince.ActionSinceDate
 import pl.pej.trelloilaro.api.request.builder.member.{Members, MemberField}
 import pl.pej.trelloilaro.api.request.builder.card.{CardAttachmentField, CardField, Card}
-import pl.pej.trelloilaro.api.request.builder.board.Checklists
+import pl.pej.trelloilaro.api.request.builder.board.{BoardField, ChecklistField, Checklists}
 import pl.pej.trelloilaro.api.request.builder.list.Lists
 import pl.pej.trelloilaro.api.request.builder.membership.Memberships
+import pl.pej.trelloilaro.api.request.builder.organization.OrganizationField
 
+/** Writing this shit seems like too-shitty-to-be-done,
+  * but in fact at least lets you turn off your brain
+  * and enjoy the music, so it's worth it.
+  */
 class GetBoardSuite extends FunSuite {
 
   val boardId = "<<id>>"
@@ -56,7 +61,7 @@ class GetBoardSuite extends FunSuite {
     assert(builder.toString === s"/1/boards/$boardId?actions_limit=50")
   }
 
-  test("/boards/[board_id] with fields") {
+  test("/boards/[board_id] with action fields") {
     val builder = emptyBuilder.withActionFields(ActionField.date, ActionField.`type`)
     assert(builder.toString === s"/1/boards/$boardId?action_fields=date,type")
   }
@@ -132,10 +137,43 @@ class GetBoardSuite extends FunSuite {
     val builder = emptyBuilder.withMemberFields(MemberField.url)
     assert(builder.toString === s"/1/boards/$boardId?member_fields=url")
   }
+  test("/boards/[board_id] with members invited") {
+    val builder = emptyBuilder.withMembersInvited(Members.normal)
+    assert(builder.toString === s"/1/boards/$boardId?membersInvited=normal")
+  }
+  test("/boards/[board_id] with members invited fields") {
+    val builder = emptyBuilder.withMembersInvitedFields(MemberField.avatarHash)
+    assert(builder.toString === s"/1/boards/$boardId?membersInvited_fields=avatarHash")
+  }
+  test("/boards/[board_id] with checklists") {
+    val builder = emptyBuilder.withChecklists(Checklists.all)
+    assert(builder.toString === s"/1/boards/$boardId?checklists=all")
+  }
+  test("/boards/[board_id] with checklist fields") {
+    val builder = emptyBuilder.withChecklistFields(ChecklistField.idBoard)
+    assert(builder.toString === s"/1/boards/$boardId?checklist_fields=idBoard")
+  }
+  test("/boards/[board_id] with organization") {
+    val builder = emptyBuilder.withOrganization(false)
+    assert(builder.toString === s"/1/boards/$boardId?organization=false")
+  }
+  test("/boards/[board_id] with organization fields") {
+    val builder = emptyBuilder.withOrganizationFields(OrganizationField.name)
+    assert(builder.toString === s"/1/boards/$boardId?organization_fields=name")
+  }
+  test("/boards/[board_id] with organization memberships") {
+    val builder = emptyBuilder.withOrganizationMemberships(Memberships.me)
+    assert(builder.toString === s"/1/boards/$boardId?organization_memberships=me")
+  }
 
-  //  test("/boards/[board_id] with ") {
-//    val builder = emptyBuilder.
-//    assert(builder.toString === s"/1/boards/$boardId?")
-//  }
+  test("/boards/[board_id] with my prefs") {
+    val builder = emptyBuilder.withMyPrefs(false)
+    assert(builder.toString === s"/1/boards/$boardId?myPrefs=false")
+  }
+
+  test("/boards/[board_id] with fields") {
+    val builder = emptyBuilder.withFields(BoardField.dateLastActivity)
+    assert(builder.toString === s"/1/boards/$boardId?fields=dateLastActivity")
+  }
 
 }

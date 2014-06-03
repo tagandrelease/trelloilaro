@@ -5,7 +5,9 @@ import pl.pej.trelloilaro.api.request.builder.action._
 import pl.pej.trelloilaro.api.request.builder.member._
 import pl.pej.trelloilaro.api.request.builder.card._
 import pl.pej.trelloilaro.api.request.builder.list.{ListsBuilder, ListFieldsBuilder}
-import pl.pej.trelloilaro.api.request.builder.membership.{MembershipsMemberBuilder, MembershipsBuilder}
+import pl.pej.trelloilaro.api.request.builder.membership.{OrganizationMembershipsBuilder, MembershipsMemberBuilder, MembershipsBuilder}
+import pl.pej.trelloilaro.api.request.builder.organization.{OrganizationFieldsBuilder, OrganizationBuilder}
+import pl.pej.trelloilaro.api.request.builder.misc.MyPrefsBuilder
 
 
 /** GET /1/boards/[board_id]
@@ -19,7 +21,10 @@ with ActionFormatBuilder[GetBoard] with ActionSinceBuilder[GetBoard] with Action
 with ActionMemberCreatorFieldsBuilder[GetBoard] with ActionMemberCreatorBuilder[GetBoard] with CardsBuilder[GetBoard] with CardFieldsBuilder[GetBoard]
 with CardAttachmentsBuilder[GetBoard] with CardAttachmentFieldsBuilder[GetBoard] with CardChecklistsBuilder[GetBoard] with CardStickersBuilder[GetBoard]
 with BoardStarsBuilder[GetBoard] with ListFieldsBuilder[GetBoard] with ListsBuilder[GetBoard] with MembershipsBuilder[GetBoard] with MembershipsMemberBuilder[GetBoard]
-with MembershipsMemberFieldsBuilder[GetBoard] with MembersBuilder[GetBoard] with MemberFieldsBuilder[GetBoard]
+with MembershipsMemberFieldsBuilder[GetBoard] with MembersBuilder[GetBoard] with MemberFieldsBuilder[GetBoard] with MembersInvitedBuilder[GetBoard]
+with MembersInvitedFieldsBuilder[GetBoard] with ChecklistsBuilder[GetBoard] with ChecklistFieldsBuilder[GetBoard]
+with OrganizationBuilder[GetBoard] with OrganizationFieldsBuilder[GetBoard] with OrganizationMembershipsBuilder[GetBoard] with MyPrefsBuilder[GetBoard]
+with FieldsBuilder[GetBoard]
 {
   def construct(params: Map[String,List[String]]) = GetBoard(boardId, params)
 

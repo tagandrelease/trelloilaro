@@ -7,6 +7,11 @@ trait BoardFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withBoardFields(fields: BoardField *) = withParams("board_fields", fields)
 
 }
+trait FieldsBuilder[T] { this: RequestBuilder[T] =>
+
+  def withFields(fields: BoardField *) = withParams("fields", fields)
+
+}
 
 trait BoardField extends RequestParam
 

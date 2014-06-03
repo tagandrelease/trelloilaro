@@ -15,6 +15,10 @@ trait MemberFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withMemberFields(fields: MemberField *) = withParams("member_fields", fields)
 }
 
+trait MembersInvitedFieldsBuilder[T] { this: RequestBuilder[T] =>
+  def withMembersInvitedFields(fields: MemberField *) = withParams("membersInvited_fields", fields)
+}
+
 trait MembershipsMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withMembershipsMemberFields(fields: MemberField *) = withParams("memberships_member_fields", fields)
 }

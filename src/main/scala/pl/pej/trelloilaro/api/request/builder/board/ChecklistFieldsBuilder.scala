@@ -12,8 +12,8 @@ trait ChecklistField extends RequestParam
 
 object ChecklistField {
   case object all extends ChecklistField with AllRequestParam
-  case object name extends Boards
-  case object idBoard extends Boards
-  case object idCard extends Boards
-  case object pos extends Boards
+  case object name extends ChecklistField
+  case object idBoard extends ChecklistField
+  case object idCard extends ChecklistField
+  case object pos extends ChecklistField
 }

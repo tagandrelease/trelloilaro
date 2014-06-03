@@ -7,6 +7,11 @@ trait MembershipsBuilder[T] { this: RequestBuilder[T] =>
   def withMemberships(value: Memberships) = withOnlyParam("memberships", value)
 
 }
+trait OrganizationMembershipsBuilder[T] { this: RequestBuilder[T] =>
+
+  def withOrganizationMemberships(value: Memberships) = withOnlyParam("organization_memberships", value)
+
+}
 
 trait Memberships extends RequestParam
 

@@ -6,6 +6,10 @@ trait MembersBuilder[T] { this: RequestBuilder[T] =>
 
   def withMembers(values: Members*) = withParams("members", values)
 }
+trait MembersInvitedBuilder[T] { this: RequestBuilder[T] =>
+
+  def withMembersInvited(values: Members*) = withParams("membersInvited", values)
+}
 
 trait Members extends RequestParam
 
