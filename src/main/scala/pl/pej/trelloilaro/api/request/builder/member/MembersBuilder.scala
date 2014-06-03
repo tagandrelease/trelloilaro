@@ -1,9 +1,18 @@
 package pl.pej.trelloilaro.api.request.builder.member
 
-import pl.pej.trelloilaro.api.request.RequestBuilder
+import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait ActionMemberBuilder[T] { this: RequestBuilder[T] =>
+trait MembersBuilder[T] { this: RequestBuilder[T] =>
 
-  def withActionMember(value: Boolean) = withOnlyParam("action_member", value)
+  def withMembers(values: Members*) = withParams("members", values)
+}
 
+trait Members extends RequestParam
+
+object Members {
+  case object all extends Members with AllRequestParam
+  case object none extends Members
+  case object normal extends Members
+  case object admins extends Members
+  case object owners extends Members
 }

@@ -14,6 +14,10 @@ trait CardMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
 trait MemberFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withMemberFields(fields: MemberField *) = withParams("member_fields", fields)
 }
+
+trait MembershipsMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
+  def withMembershipsMemberFields(fields: MemberField *) = withParams("memberships_member_fields", fields)
+}
 trait ActionMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withActionMemberFields(fields: MemberField *) = withParams("action_member_fields", fields)
 }

@@ -2,9 +2,10 @@ package pl.pej.trelloilaro.api.request
 
 import pl.pej.trelloilaro.api.request.builder.board._
 import pl.pej.trelloilaro.api.request.builder.action._
-import pl.pej.trelloilaro.api.request.builder.member.{ActionMemberFieldsBuilder, ActionMemberBuilder, MemberFieldsBuilder, ActionMemberCreatorFieldsBuilder}
-import pl.pej.trelloilaro.api.request.builder.itemState.{CheckItemStateFieldsBuilder, CheckItemStatesBuilder}
-import pl.pej.trelloilaro.api.request.builder.card.{CardAttachmentFieldsBuilder, CardAttachmentsBuilder, CardFieldsBuilder, CardsBuilder}
+import pl.pej.trelloilaro.api.request.builder.member._
+import pl.pej.trelloilaro.api.request.builder.card._
+import pl.pej.trelloilaro.api.request.builder.list.{ListsBuilder, ListFieldsBuilder}
+import pl.pej.trelloilaro.api.request.builder.membership.{MembershipsMemberBuilder, MembershipsBuilder}
 
 
 /** GET /1/boards/[board_id]
@@ -16,7 +17,9 @@ case class GetBoard(
 with ActionBuilder[GetBoard] with ActionEntitiesBuilder[GetBoard] with ActionsLimitBuilder[GetBoard] with ActionFieldsBuilder[GetBoard]
 with ActionFormatBuilder[GetBoard] with ActionSinceBuilder[GetBoard] with ActionMemberBuilder[GetBoard] with ActionMemberFieldsBuilder[GetBoard]
 with ActionMemberCreatorFieldsBuilder[GetBoard] with ActionMemberCreatorBuilder[GetBoard] with CardsBuilder[GetBoard] with CardFieldsBuilder[GetBoard]
-with CardAttachmentsBuilder[GetBoard] with CardAttachmentFieldsBuilder[GetBoard] with CardChecklistsBuilder[GetBoard]
+with CardAttachmentsBuilder[GetBoard] with CardAttachmentFieldsBuilder[GetBoard] with CardChecklistsBuilder[GetBoard] with CardStickersBuilder[GetBoard]
+with BoardStarsBuilder[GetBoard] with ListFieldsBuilder[GetBoard] with ListsBuilder[GetBoard] with MembershipsBuilder[GetBoard] with MembershipsMemberBuilder[GetBoard]
+with MembershipsMemberFieldsBuilder[GetBoard] with MembersBuilder[GetBoard] with MemberFieldsBuilder[GetBoard]
 {
   def construct(params: Map[String,List[String]]) = GetBoard(boardId, params)
 
