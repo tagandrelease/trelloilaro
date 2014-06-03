@@ -15,20 +15,25 @@ trait AllRequestParam
 
 /** Builder for the requests. Accumulates the request string.
   *
-  * TODO: store unformatted args and format on final call
   */
-abstract class RequestBuilder[T](prefix: String, params: Map[String, List[String]])  { this: { def construct(param: String, value: Map[String, List[String]]): T} =>
+abstract class RequestBuilder[T](params: Map[String, List[String]])  {
 
-  override def toString: String = prefix + "&" + params.map{ case (k,v) =>
+  override def toString: String = prefix + "?" + params.map{ case (k,v) =>
     s"$k=${v.mkString(",")}"
   }.toList.sorted.mkString("&")
 
+  def construct(value: Map[String, List[String]]): T
 
-  def withParam(paramName: String, value: Boolean): T = withParam(paramName, value.toString)
-  def withParam(paramName: String, value: Int): T = withParam(paramName, value.toString)
-  def withParam(paramName: String, value: String): T = withStringParam(paramName, List(value))
+  def prefix: String = ""
 
-  def withParams(paramName: String, values: Seq[RequestParam]): T = {
+  def withToken(token: String): T = withParam("token", token)
+  def withKey(key: String): T = withParam("key", key)
+
+//  protected def withParam(paramName: String, value: Boolean): T = withParam(paramName, value.toString)
+//  protected def withParam(paramName: String, value: Int): T = withParam(paramName, value.toString)
+  protected def withParam(paramName: String, value: String): T = withStringParam(paramName, List(value))
+
+  protected def withParams(paramName: String, values: Seq[RequestParam]): T = {
 
     val stringValues =
       if(values.exists(p => p.isInstanceOf[AllRequestParam])) List("all")
@@ -37,7 +42,12 @@ abstract class RequestBuilder[T](prefix: String, params: Map[String, List[String
     withStringParam(paramName, stringValues)
   }
 
-  //TODO rename
+  /** Appends more comma separated params
+    *
+    * @param paramName
+    * @param values
+    * @return
+    */
   private def withStringParam(paramName: String, values: Seq[String]): T = {
 
     val oldParams = params.get(paramName)
@@ -49,19 +59,31 @@ abstract class RequestBuilder[T](prefix: String, params: Map[String, List[String
         (old ++ values).distinct.sorted
     }
 
-    construct(prefix, params.updated(paramName, newParams))
+    construct(params.updated(paramName, newParams))
   }
+
+
+  protected def withOnlyParam(paramName: String, value: RequestParam): T = withOnlyParam(paramName, value.toString)
+  protected def withOnlyParam(paramName: String, value: Int): T = withOnlyParam(paramName, value.toString)
+  protected def withOnlyParam(paramName: String, value: Boolean): T = withOnlyParam(paramName, value.toString)
+
+  /** Leaves only the new parameter
+    *
+    * @param paramName
+    * @param value
+    * @return
+    */
+  protected def withOnlyParam(paramName: String, value: String): T = {
+    construct(params.updated(paramName, value::Nil))
+  }
+
 }
 
-case class BoardRequestBuilder(prefix: String, params: Map[String, List[String]]) extends RequestBuilder[BoardRequestBuilder](prefix, params)
-            with BoardFieldsBuilder with BoardsBuilder {
-  def construct(prefix: String, params: Map[String,List[String]]) = BoardRequestBuilder(prefix, params)
-}
-case class CardRequestBuilder(prefix: String, params: Map[String, List[String]]) extends RequestBuilder[CardRequestBuilder](prefix, params)
-           with CardAttachmentFieldsBuilder with CardAttachmentsBuilder with CardFieldsBuilder with CardMemberFieldsBuilder with CardsBuilder with CardStickersBuilder {
-  def construct(prefix: String, params: Map[String,List[String]]) = CardRequestBuilder(prefix, params)
-}
-case class ActionRequestBuilder(prefix: String, params: Map[String, List[String]]) extends RequestBuilder[ActionRequestBuilder](prefix, params)
-           with FieldBuilder with ActionBuilder with EntitiesBuilder with BeforeBuilder with SinceBuilder with LimitBuilder{
-  def construct(prefix: String, params: Map[String,List[String]]) = ActionRequestBuilder(prefix, params)
-}
+//case class CardRequestBuilder(base: String, params: Map[String, List[String]], suffix: String) extends RequestBuilder[CardRequestBuilder](base, params, suffix)
+//           with CardAttachmentFieldsBuilder with CardAttachmentsBuilder with CardFieldsBuilder with CardMemberFieldsBuilder with CardsBuilder with CardStickersBuilder {
+//  def construct(prefix: String, params: Map[String,List[String]], suffix: String) = CardRequestBuilder(prefix, params, suffix)
+//}
+//case class ActionRequestBuilder(base: String, params: Map[String, List[String]], suffix: String) extends RequestBuilder[ActionRequestBuilder](base, params, suffix)
+//           with FieldBuilder with ActionBuilder with EntitiesBuilder with BeforeBuilder with SinceBuilder with LimitBuilder{
+//  def construct(prefix: String, params: Map[String,List[String]], suffix: String) = ActionRequestBuilder(prefix, params, suffix)
+//}

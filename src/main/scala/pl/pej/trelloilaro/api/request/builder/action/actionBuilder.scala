@@ -1,66 +1,70 @@
 package pl.pej.trelloilaro.api.request.builder.action
 
-import pl.pej.trelloilaro.api.request.{ActionRequestBuilder, AllRequestParam, RequestParam, RequestBuilder}
+import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait ActionBuilder { this: ActionRequestBuilder =>
+trait ActionBuilder[T] { this: RequestBuilder[T] =>
 
-  def actions(actions: ActionParam*): ActionRequestBuilder = withParams("action", actions)
-
+  def actions(actions: Actions*): T = withParams("actions", actions)
 }
 
-trait ActionParam extends RequestParam
+trait FilterActionBuilder[T] { this: RequestBuilder[T] =>
+
+  def actions(actions: Actions*): T = withParams("filter", actions)
+}
+
+trait Actions extends RequestParam
 
 object Actions {
-  case object all extends ActionParam with AllRequestParam
-  case object addAttachmentToCard extends ActionParam
-  case object addChecklistToCard extends ActionParam
-  case object addMemberToBoard extends ActionParam
-  case object addMemberToCard extends ActionParam
-  case object addMemberToOrganization extends ActionParam
-  case object addToOrganizationBoard extends ActionParam
-  case object commentCard extends ActionParam
-  case object copyCommentCard extends ActionParam
-  case object convertToCardFromCheckItem extends ActionParam
-  case object copyBoard extends ActionParam
-  case object createBoard extends ActionParam
-  case object createCard extends ActionParam
-  case object copyCard extends ActionParam
-  case object createList extends ActionParam
-  case object createOrganization extends ActionParam
-  case object deleteAttachmentFromCard extends ActionParam
-  case object deleteBoardInvitation extends ActionParam
-  case object deleteCard extends ActionParam
-  case object deleteOrganizationInvitation extends ActionParam
-  case object disablePowerUp extends ActionParam
-  case object emailCard extends ActionParam
-  case object enablePowerUp extends ActionParam
-  case object makeAdminOfBoard extends ActionParam
-  case object makeNormalMemberOfBoard extends ActionParam
-  case object makeNormalMemberOfOrganization extends ActionParam
-  case object makeObserverOfBoard extends ActionParam
-  case object memberJoinedTrello extends ActionParam
-  case object moveCardFromBoard extends ActionParam
-  case object moveListFromBoard extends ActionParam
-  case object moveCardToBoard extends ActionParam
-  case object moveListToBoard extends ActionParam
-  case object removeAdminFromBoard extends ActionParam
-  case object removeAdminFromOrganization extends ActionParam
-  case object removeChecklistFromCard extends ActionParam
-  case object removeFromOrganizationBoard extends ActionParam
-  case object removeMemberFromCard extends ActionParam
-  case object unconfirmedBoardInvitation extends ActionParam
-  case object unconfirmedOrganizationInvitation extends ActionParam
-  case object updateBoard extends ActionParam
-  case object updateCard extends ActionParam
-  case object updateCheckItemStateOnCard extends ActionParam
-  case object updateChecklist extends ActionParam
-  case object updateList extends ActionParam
-  case object updateMember extends ActionParam
-  case object updateOrganization extends ActionParam
-  case object updateCardIdList extends ActionParam { override def toString = "updateCard:idList"}
-  case object updateCardClosed extends ActionParam { override def toString = "updateCard:closed"}
-  case object updateCardDesc extends ActionParam { override def toString = "updateCard:desc"}
-  case object updateCardName extends ActionParam { override def toString = "updateCard:name"}
-  case object updateListClosed extends ActionParam { override def toString = "updateList:closed"}
-  case object updateListName extends ActionParam { override def toString = "updateList:name"}
+  case object all extends Actions with AllRequestParam
+  case object addAttachmentToCard extends Actions
+  case object addChecklistToCard extends Actions
+  case object addMemberToBoard extends Actions
+  case object addMemberToCard extends Actions
+  case object addMemberToOrganization extends Actions
+  case object addToOrganizationBoard extends Actions
+  case object commentCard extends Actions
+  case object copyCommentCard extends Actions
+  case object convertToCardFromCheckItem extends Actions
+  case object copyBoard extends Actions
+  case object createBoard extends Actions
+  case object createCard extends Actions
+  case object copyCard extends Actions
+  case object createList extends Actions
+  case object createOrganization extends Actions
+  case object deleteAttachmentFromCard extends Actions
+  case object deleteBoardInvitation extends Actions
+  case object deleteCard extends Actions
+  case object deleteOrganizationInvitation extends Actions
+  case object disablePowerUp extends Actions
+  case object emailCard extends Actions
+  case object enablePowerUp extends Actions
+  case object makeAdminOfBoard extends Actions
+  case object makeNormalMemberOfBoard extends Actions
+  case object makeNormalMemberOfOrganization extends Actions
+  case object makeObserverOfBoard extends Actions
+  case object memberJoinedTrello extends Actions
+  case object moveCardFromBoard extends Actions
+  case object moveListFromBoard extends Actions
+  case object moveCardToBoard extends Actions
+  case object moveListToBoard extends Actions
+  case object removeAdminFromBoard extends Actions
+  case object removeAdminFromOrganization extends Actions
+  case object removeChecklistFromCard extends Actions
+  case object removeFromOrganizationBoard extends Actions
+  case object removeMemberFromCard extends Actions
+  case object unconfirmedBoardInvitation extends Actions
+  case object unconfirmedOrganizationInvitation extends Actions
+  case object updateBoard extends Actions
+  case object updateCard extends Actions
+  case object updateCheckItemStateOnCard extends Actions
+  case object updateChecklist extends Actions
+  case object updateList extends Actions
+  case object updateMember extends Actions
+  case object updateOrganization extends Actions
+  case object updateCardIdList extends Actions { override def toString = "updateCard:idList"}
+  case object updateCardClosed extends Actions { override def toString = "updateCard:closed"}
+  case object updateCardDesc extends Actions { override def toString = "updateCard:desc"}
+  case object updateCardName extends Actions { override def toString = "updateCard:name"}
+  case object updateListClosed extends Actions { override def toString = "updateList:closed"}
+  case object updateListName extends Actions { override def toString = "updateList:name"}
 }

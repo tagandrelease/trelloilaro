@@ -2,34 +2,34 @@ package pl.pej.trelloilaro.api.request.builder.board
 
 import pl.pej.trelloilaro.api.request.{AllRequestParam, RequestParam, RequestBuilder}
 
-trait BoardFieldsBuilder { this: RequestBuilder[_] =>
+trait BoardFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withBoardFields(fields: BoardFieldsParam *) = withParams("board_fields", fields)
+  def withBoardFields(fields: BoardField *) = withParams("board_fields", fields)
 
 }
 
-trait BoardFieldsParam extends RequestParam
+trait BoardField extends RequestParam
 
-object BoardFieldsRequestBuilder {
-  case object all extends BoardFieldsParam with AllRequestParam
-  case object name extends BoardFieldsParam
-  case object desc extends BoardFieldsParam
-  case object descData extends BoardFieldsParam
-  case object closed extends BoardFieldsParam
-  case object idOrganization extends BoardFieldsParam
-  case object invited extends BoardFieldsParam
-  case object pinned extends BoardFieldsParam
-  case object starred extends BoardFieldsParam
-  case object url extends BoardFieldsParam
-  case object prefs extends BoardFieldsParam
-  case object invitations extends BoardFieldsParam
-  case object memberships extends BoardFieldsParam
-  case object shortLink extends BoardFieldsParam
-  case object subscribed extends BoardFieldsParam
-  case object labelNames extends BoardFieldsParam
-  case object powerUps extends BoardFieldsParam
-  case object dateLastActivity extends BoardFieldsParam
-  case object dateLastView extends BoardFieldsParam
-  case object shortUrl extends BoardFieldsParam
+object BoardField {
+  case object all extends BoardField with AllRequestParam
+  case object name extends BoardField
+  case object desc extends BoardField
+  case object descData extends BoardField
+  case object closed extends BoardField
+  case object idOrganization extends BoardField
+  case object invited extends BoardField
+  case object pinned extends BoardField
+  case object starred extends BoardField
+  case object url extends BoardField
+  case object prefs extends BoardField
+  case object invitations extends BoardField
+  case object memberships extends BoardField
+  case object shortLink extends BoardField
+  case object subscribed extends BoardField
+  case object labelNames extends BoardField
+  case object powerUps extends BoardField
+  case object dateLastActivity extends BoardField
+  case object dateLastView extends BoardField
+  case object shortUrl extends BoardField
 
 }
