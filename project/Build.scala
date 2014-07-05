@@ -24,10 +24,10 @@ object Resolvers {
 
 object Dependencies {
 
-  val akkaVersion = "2.2.3"
+  val akkaVersion = "2.3.3"
 
-  val sprayClient = "io.spray" % "spray-client" % "1.2.0"
-  val sprayJson = "io.spray" %%  "spray-json" % "1.2.5"
+  val sprayClient = "io.spray" % "spray-client" % "1.3.1"
+  val sprayJson = "io.spray" %%  "spray-json" % "1.2.6"
 
   val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaVersion
   val akkaTest = "com.typesafe.akka" %% "akka-testkit" % akkaVersion

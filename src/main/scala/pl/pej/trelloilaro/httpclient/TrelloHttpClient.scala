@@ -1,40 +1,35 @@
 package pl.pej.trelloilaro.httpclient
 
-import spray.http._
-import spray.client.pipelining._
-import akka.actor.ActorSystem
+import spray.client.pipelining
 import scala.concurrent.Future
-import java.util.concurrent.TimeUnit
-import spray.http.HttpHeaders.Host
+import pl.pej.trelloilaro.httpclient.serialization.TrelloJsonFormat
+import pl.pej.trelloilaro.api.requestBuilder.GetBoard
+import pl.pej.trelloilaro.model.Board
+import spray.http.{HttpCharsets, HttpCharset, HttpResponse}
+import spray.json._
+import DefaultJsonProtocol._
+import scala.concurrent.{ Future, ExecutionContext }
+import akka.util.Timeout
 
-/** Spray-client based implementation.
+/** Supports object oriented queires.
   *
-  * @param apiKey
-  * @param accessToken
-  * @param apiVersion
-  */
-class TrelloHttpClient(val apiKey: String, val accessToken: Option[String] = None, val apiVersion: String = "1") {
+  * Includes domain knowledge: binds RequestBuilder to model instance.
+ */
+class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) {
 
-  /** Application key with optional access token */
-  protected val requestSuffix = s"?key=$apiKey" + accessToken.map("&token="+ _).getOrElse("")
+  def getBoard(requestBuilder: GetBoard): Future[Board] = {
+    import TrelloJsonFormat._
+    implicit val ec = ExecutionContext.Implicits.global
 
-  protected val requestPrefix = s"api.trello.com"
+    val board: Future[Board] = get(requestBuilder).map{ response =>
 
-  implicit val system = ActorSystem("trello-web-client")
-  implicit val timeout = new akka.util.Timeout(5, TimeUnit.SECONDS)
 
-  import system.dispatcher
+      response.entity.asString(HttpCharsets.`UTF-8`).parseJson.convertTo[Board]
 
-  protected val pipeline = setHostToTrello ~> sendReceive
+    }
 
-  protected def setHostToTrello = { request: HttpRequest =>
-    request.withEffectiveUri(true, Host(requestPrefix))
+
+
+    board
   }
-
-  protected def formatRequest(path: String) = s"/$apiVersion/$path$requestSuffix"
-
-  private[trelloilaro] def get(path: String): Future[HttpResponse] = {
-    pipeline(Get(formatRequest(path)))
-  }
-
 }

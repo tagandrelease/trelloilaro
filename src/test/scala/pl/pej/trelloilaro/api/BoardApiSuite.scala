@@ -1,6 +1,7 @@
 package pl.pej.trelloilaro.api
 
 import org.scalatest.FunSuite
+import pl.pej.trelloilaro.api.requestBuilder.GetBoard
 
 class BoardApiSuite extends FunSuite {
 //

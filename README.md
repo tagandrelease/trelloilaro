@@ -1,9 +1,9 @@
 trelloilaro
 ===========
 
-Extensions for Trello to be used by Polish Esperanto-Youth 
+Trello API Scala interface. Type safe & IDE support.
 
-The goal is to create a type safe interface for which IDE would be able to provide well support.
+Example test:
 
 ```scala
   test("/boards/[board_id] with token, key and some actions") {
