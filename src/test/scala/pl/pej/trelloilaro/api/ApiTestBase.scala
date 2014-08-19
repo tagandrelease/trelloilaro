@@ -14,14 +14,15 @@ trait ApiTestBase extends Logging {
 
   val config = TrelloConfig.load
   val client = new TrelloHttpClient(config.keys.appKey)
+
 //  val future: Future[HttpResponse] = client.get("board/4d5ea62fd76aa1136000000c")
-
-  def responses_?(url: String) = {
-    val future = client.get(url)
-    val res = Await.result(future, 10 seconds)
-
-    assert(res.status.isSuccess)
-
-    info(res.entity.asString)
-  }
+//
+//  def responses_?(url: String) = {
+//    val future = client.getBoard(url)
+//    val res = Await.result(future, 10 seconds)
+//
+//    assert(res.status.isSuccess)
+//
+//    info(res.entity.asString)
+//  }
 }

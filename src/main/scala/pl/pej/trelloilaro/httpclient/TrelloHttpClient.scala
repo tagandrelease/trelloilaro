@@ -3,7 +3,7 @@ package pl.pej.trelloilaro.httpclient
 import spray.client.pipelining
 import scala.concurrent.Future
 import pl.pej.trelloilaro.httpclient.serialization.TrelloJsonFormat
-import pl.pej.trelloilaro.api.requestBuilder.GetBoard
+import pl.pej.trelloilaro.api.requestBuilder.{RequestBuilder, GetBoard}
 import pl.pej.trelloilaro.model.Board
 import spray.http.{HttpCharsets, HttpCharset, HttpResponse}
 import spray.json._
@@ -17,19 +17,15 @@ import akka.util.Timeout
  */
 class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) {
 
-  def getBoard(requestBuilder: GetBoard): Future[Board] = {
-    import TrelloJsonFormat._
-    implicit val ec = ExecutionContext.Implicits.global
-
-    val board: Future[Board] = get(requestBuilder).map{ response =>
+  import TrelloJsonFormat._
+  implicit val ec = ExecutionContext.Implicits.global
 
 
-      response.entity.asString(HttpCharsets.`UTF-8`).parseJson.convertTo[Board]
-
+  protected def getMapTo[T:JsonReader](requestBuilder: RequestBuilder[RequestBuilder[_]]): Future[T] ={
+    get(requestBuilder).map{ response =>
+      response.entity.asString(HttpCharsets.`UTF-8`).parseJson.convertTo[T]
     }
-
-
-
-    board
   }
+
+  def getBoard(requestBuilder: GetBoard): Future[Board] = getMapTo[Board](requestBuilder)
 }
