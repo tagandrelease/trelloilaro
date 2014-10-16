@@ -1,13 +1,12 @@
 package pl.pej.trelloilaro.httpclient
 
+import com.typesafe.scalalogging.LazyLogging
+import muster.codec.jawn.JawnCodec
 import spray.client.pipelining
 import scala.concurrent.Future
-import pl.pej.trelloilaro.httpclient.serialization.TrelloJsonFormat
 import pl.pej.trelloilaro.api.requestBuilder.{RequestBuilder, GetBoard}
 import pl.pej.trelloilaro.model.Board
 import spray.http.{HttpCharsets, HttpCharset, HttpResponse}
-import spray.json._
-import DefaultJsonProtocol._
 import scala.concurrent.{ Future, ExecutionContext }
 import akka.util.Timeout
 
@@ -15,17 +14,18 @@ import akka.util.Timeout
   *
   * Includes domain knowledge: binds RequestBuilder to model instance.
  */
-class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) {
+class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) with LazyLogging {
 
-  import TrelloJsonFormat._
   implicit val ec = ExecutionContext.Implicits.global
 
-
-  protected def getMapTo[T:JsonReader](requestBuilder: RequestBuilder[RequestBuilder[_]]): Future[T] ={
+  protected def getStringResponse(requestBuilder: RequestBuilder[RequestBuilder[_]]): Future[String] ={
     get(requestBuilder).map{ response =>
-      response.entity.asString(HttpCharsets.`UTF-8`).parseJson.convertTo[T]
+      val str = response.entity.asString(HttpCharsets.`UTF-8`)
+
+      logger.debug(str)
+      str
     }
   }
 
-  def getBoard(requestBuilder: GetBoard): Future[Board] = getMapTo[Board](requestBuilder)
+  def getBoard(requestBuilder: GetBoard): Future[Board] = getStringResponse(requestBuilder).map(JawnCodec.as[Board](_))
 }

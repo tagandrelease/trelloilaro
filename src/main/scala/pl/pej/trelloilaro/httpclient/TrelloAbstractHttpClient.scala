@@ -32,7 +32,7 @@ abstract class TrelloAbstractHttpClient(val apiKey: String, val accessToken: Opt
     request.withEffectiveUri(true, Host(requestPrefix))
   }
 
-  protected def formatRequest(path: String) = s"/$apiVersion/$path"
+  protected def formatRequest(path: String) = s"/$apiVersion$path"
 
   protected def get[T](requestBuilder: TrelloRequestBuilder[TrelloRequestBuilder[_]]): Future[HttpResponse] = {
 

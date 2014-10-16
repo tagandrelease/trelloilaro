@@ -28,7 +28,7 @@ with FieldsBuilder[GetBoard]
 {
   def construct(params: Map[String,List[String]]) = GetBoard(boardId, params)
 
-  override def prefix = s"/1/boards/$boardId"
+  override def prefix = s"/boards/$boardId"
 }
 
 //GET /1/boards/[board_id/[field]
