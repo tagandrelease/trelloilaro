@@ -3,13 +3,6 @@ package pl.pej.trelloilaro.model
 case class BoardId(str: String) extends AnyVal
 case class OrganizationId(str: String) extends AnyVal
 
-/*
-
- Changes here may require changes in `JsonFormat`
-
-  */
-
-
 case class BoardPrefs(
                       permissionLevel: String,
                       voting: String,
@@ -39,7 +32,7 @@ case class LabelNames(
                      )
 
 case class Board(
-                  id: BoardId,
+                  id: String,
                   name: String,
                   desc: String,
                   closed: Boolean,

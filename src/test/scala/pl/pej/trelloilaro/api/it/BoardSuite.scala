@@ -11,17 +11,33 @@ import pl.pej.trelloilaro.api.ApiTestBase
 
 class BoardSuite extends FunSuite with ApiTestBase {
 
-  test("Basic board (empty getboard request)") {
+  val testBoardId = "kVYrEz26"
+  def getBoard = GetBoard(testBoardId)
 
-    val request = GetBoard("kVYrEz26")
+
+  def testHelper(request: GetBoard): Board = {
 
     val responseFuture: Future[Board] = client.getBoard(request)
 
     val response: Board = Await.result(responseFuture, 10 seconds)
 
-    println(response)
-
+    response
   }
 
+  test("Basic board (empty getboard request)") {
+
+    val request = getBoard
+
+    testHelper(request)
+  }
+
+  test("Board withActioMemberCreator(true) and withActionsLimit(3)") {
+
+    val request = getBoard.withActionMemberCreator(true).withActionsLimit(3)
+
+    val board = testHelper(request)
+    assert(board.action.size <= 3)
+
+  }
 
 }

@@ -5,7 +5,7 @@ import com.typesafe.sbt.SbtAtmosPlay.atmosPlaySettings
 
 object BuildSettings {
   val buildVersion = "0.1"
-  val buildScalaVersion = "2.11.1"
+  val buildScalaVersion = "2.11.2"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     version := buildVersion,
@@ -26,10 +26,10 @@ object Resolvers {
 
 object Dependencies {
 
-  val akkaVersion = "2.3.2"
+  val akkaVersion = "2.3.6"
   val musterVer = "0.3.0"
 
-  val sprayClient = "io.spray" % "spray-client" % "1.3.1"
+  val sprayClient = "io.spray" % "spray-client_2.11" % "1.3.2"
 
   object Serialization {
     lazy val musterJawn = "org.json4s" %% "muster-codec-jawn" % musterVer

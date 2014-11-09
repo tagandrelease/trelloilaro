@@ -24,6 +24,8 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
 
       logger.debug(str)
       str
+
+      """{"id":"53aef54598654cd1f4486f08","name":"ApiTestBoard","desc":"","descData":null,"closed":false,"idOrganization":null,"pinned":false,"url":"https://trello.com/b/kVYrEz26/apitestboard","shortUrl":"https://trello.com/b/kVYrEz26","prefs":{"permissionLevel":"public","voting":"disabled","comments":"members","invitations":"members","selfJoin":false,"cardCovers":true,"cardAging":"regular","calendarFeedEnabled":false,"background":"blue","backgroundColor":"#23719F","backgroundImage":null,"backgroundImageScaled":null,"backgroundTile":false,"backgroundBrightness":"unknown","canBePublic":true,"canBeOrg":true,"canBePrivate":true,"canInvite":true},"labelNames":{"red":"","orange":"","yellow":"","green":"","blue":"","purple":""}}"""
     }
   }
 
