@@ -1,14 +1,15 @@
 package pl.pej.trelloilaro.httpclient
 
 import com.typesafe.scalalogging.LazyLogging
-import muster.codec.jawn.JawnCodec
+import pl.pej.trelloilaro.httpclient.TrelloHttpClient.JsonParseErrorException
 import spray.client.pipelining
-import scala.concurrent.Future
+import scala.concurrent.{Promise, Future, ExecutionContext}
 import pl.pej.trelloilaro.api.requestBuilder.{RequestBuilder, GetBoard}
-import pl.pej.trelloilaro.model.Board
+import pl.pej.trelloilaro.model._
 import spray.http.{HttpCharsets, HttpCharset, HttpResponse}
-import scala.concurrent.{ Future, ExecutionContext }
 import akka.util.Timeout
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 
 /** Supports object oriented queires.
   *
@@ -18,16 +19,30 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
 
   implicit val ec = ExecutionContext.Implicits.global
 
-  protected def getStringResponse(requestBuilder: RequestBuilder[RequestBuilder[_]]): Future[String] ={
+  protected def getStringResponse(requestBuilder: RequestBuilder[RequestBuilder[_]]): Future[String] = {
     get(requestBuilder).map{ response =>
       val str = response.entity.asString(HttpCharsets.`UTF-8`)
 
       logger.debug(str)
       str
-
-      """{"id":"53aef54598654cd1f4486f08","name":"ApiTestBoard","desc":"","descData":null,"closed":false,"idOrganization":null,"pinned":false,"url":"https://trello.com/b/kVYrEz26/apitestboard","shortUrl":"https://trello.com/b/kVYrEz26","prefs":{"permissionLevel":"public","voting":"disabled","comments":"members","invitations":"members","selfJoin":false,"cardCovers":true,"cardAging":"regular","calendarFeedEnabled":false,"background":"blue","backgroundColor":"#23719F","backgroundImage":null,"backgroundImageScaled":null,"backgroundTile":false,"backgroundBrightness":"unknown","canBePublic":true,"canBeOrg":true,"canBePrivate":true,"canInvite":true},"labelNames":{"red":"","orange":"","yellow":"","green":"","blue":"","purple":""}}"""
     }
   }
 
-  def getBoard(requestBuilder: GetBoard): Future[Board] = getStringResponse(requestBuilder).map(JawnCodec.as[Board](_))
+  def getBoard(requestBuilder: GetBoard): Future[Board] = {
+
+    getStringResponse(requestBuilder).map {
+      Json.parse(_).validate[Board] match {
+        case s: JsSuccess[Board] => s.get
+        case e: JsError =>
+          val msg = JsError.toFlatJson(e).toString()
+          logger.error("Json error while trying to parse a Board: " + msg)
+          throw JsonParseErrorException(msg)
+      }
+    }
+  }
+}
+
+object TrelloHttpClient {
+
+  case class JsonParseErrorException(s: String) extends RuntimeException
 }

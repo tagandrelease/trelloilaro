@@ -32,11 +32,14 @@ object Dependencies {
   val sprayClient = "io.spray" % "spray-client_2.11" % "1.3.2"
 
   object Serialization {
-    lazy val musterJawn = "org.json4s" %% "muster-codec-jawn" % musterVer
-    lazy val musterJson4s= "org.json4s" %% "muster-codec-json4s" % musterVer
-    lazy val musterString = "org.json4s" %% "muster-codec-string" % musterVer
+//    lazy val musterJawn = "org.json4s" %% "muster-codec-jawn" % musterVer
+//    lazy val musterJson4s= "org.json4s" %% "muster-codec-json4s" % musterVer
+//    lazy val musterString = "org.json4s" %% "muster-codec-string" % musterVer
+//
+//    lazy val bundle = Seq(musterJawn, musterJson4s, musterString)
+      lazy val playJson = "com.typesafe.play" % "play-json_2.11" % "2.4.0-M1"
 
-    lazy val bundle = Seq(musterJawn, musterJson4s, musterString)
+      lazy val bundle = Seq(playJson)
   }
 
   val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaVersion
