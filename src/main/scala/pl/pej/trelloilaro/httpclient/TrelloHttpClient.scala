@@ -23,16 +23,22 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
     get(requestBuilder).map{ response =>
       val str = response.entity.asString(HttpCharsets.`UTF-8`)
 
-      logger.debug(str)
+//      logger.debug(str)
       str
     }
   }
 
   def getBoard(requestBuilder: GetBoard): Future[Board] = {
 
-    getStringResponse(requestBuilder).map {
-      Json.parse(_).validate[Board] match {
-        case s: JsSuccess[Board] => s.get
+    getStringResponse(requestBuilder).map { json =>
+      val parsed = Json.parse(json)
+
+      logger.debug("Board parsed: " + Json.prettyPrint(parsed))
+
+      parsed.validate[Board] match {
+        case s: JsSuccess[Board] =>
+
+          s.get
         case e: JsError =>
           val msg = JsError.toFlatJson(e).toString()
           logger.error("Json error while trying to parse a Board: " + msg)

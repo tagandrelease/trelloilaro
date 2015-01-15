@@ -37,7 +37,7 @@ object Dependencies {
 //    lazy val musterString = "org.json4s" %% "muster-codec-string" % musterVer
 //
 //    lazy val bundle = Seq(musterJawn, musterJson4s, musterString)
-      lazy val playJson = "com.typesafe.play" % "play-json_2.11" % "2.4.0-M1"
+      lazy val playJson = "com.typesafe.play" % "play-json_2.11" % "2.4.0-M2"
 
       lazy val bundle = Seq(playJson)
   }

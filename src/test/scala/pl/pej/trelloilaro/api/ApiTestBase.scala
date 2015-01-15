@@ -10,7 +10,7 @@ import org.scalatest.FunSuite
 import grizzled.slf4j.Logging
 
 
-trait ApiTestBase extends Logging {
+trait ApiTestBase {
 
   val config = TrelloConfig.load
   val client = new TrelloHttpClient(config.keys.appKey)
