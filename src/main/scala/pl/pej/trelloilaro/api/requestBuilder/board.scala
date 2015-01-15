@@ -2,6 +2,7 @@ package pl.pej.trelloilaro.api.requestBuilder
 
 import pl.pej.trelloilaro.api.requestBuilder.builder.board._
 import pl.pej.trelloilaro.api.requestBuilder.builder.action._
+import pl.pej.trelloilaro.api.requestBuilder.builder.common.{DescBuilder, NameBuilder}
 import pl.pej.trelloilaro.api.requestBuilder.builder.member._
 import pl.pej.trelloilaro.api.requestBuilder.builder.card._
 import pl.pej.trelloilaro.api.requestBuilder.builder.list.{ListsBuilder, ListFieldsBuilder}
@@ -29,6 +30,21 @@ with FieldsBuilder[GetBoard]
   def construct(params: Map[String,List[String]]) = GetBoard(boardId, params)
 
   override def prefix = s"/boards/$boardId"
+
+  override def httpMethod: HttpMethod = GET
+}
+
+/** PUT /1/boards/[board_id]
+  */
+case class PutBoard(boardId: String, params: Map[String, List[String]] = Map()) extends RequestBuilder[PutBoard](params) with
+NameBuilder[PutBoard] with DescBuilder[PutBoard] with BoardClosedBuilder[PutBoard] with BoardSubscribedBuilder[PutBoard] with
+OrganizationIdBuilder[PutBoard]
+{
+  def construct(params: Map[String,List[String]]) = PutBoard(boardId, params)
+
+  override def prefix = s"/boards/$boardId"
+
+  override def httpMethod: HttpMethod = PUT
 }
 
 //GET /1/boards/[board_id/[field]

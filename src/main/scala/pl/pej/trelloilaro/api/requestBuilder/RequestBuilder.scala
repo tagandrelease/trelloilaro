@@ -1,5 +1,7 @@
 package pl.pej.trelloilaro.api.requestBuilder
 
+import java.net.URLEncoder
+
 import pl.pej.trelloilaro.api.requestBuilder.builder.board.{BoardsBuilder, BoardFieldsBuilder}
 import pl.pej.trelloilaro.api.requestBuilder.builder.card._
 import pl.pej.trelloilaro.api.requestBuilder.builder.action._
@@ -16,10 +18,13 @@ trait AllRequestParam
 /** Builder for the requests. Accumulates the requestBuilder string.
   *
   */
-abstract class RequestBuilder[+T](params: Map[String, List[String]])  {
+abstract class RequestBuilder[+T](params: Map[String, List[String]]) {
+
+  def httpMethod: HttpMethod
 
   override def toString: String = prefix + "?" + params.map{ case (k,v) =>
-    s"$k=${v.mkString(",")}"
+
+    s"$k=${v.map(URLEncoder.encode(_,"UTF-8")).mkString(",")}"
   }.toList.sorted.mkString("&")
 
   def construct(value: Map[String, List[String]]): T

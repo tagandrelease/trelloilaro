@@ -1,6 +1,6 @@
 package pl.pej.trelloilaro.api.requestBuilder.builder.card
 
-import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, RequestBuilder}
+import pl.pej.trelloilaro.api.requestBuilder.RequestBuilder
 
 trait CardStickersBuilder[T] { this: RequestBuilder[T] =>
 

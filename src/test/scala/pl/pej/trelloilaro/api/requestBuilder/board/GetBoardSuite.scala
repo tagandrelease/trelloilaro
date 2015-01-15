@@ -1,20 +1,17 @@
-package pl.pej.trelloilaro.api.requestBuilder
+package pl.pej.trelloilaro.api.requestBuilder.board
 
 import org.scalatest.FunSuite
-import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
+import pl.pej.trelloilaro.api.requestBuilder.GetBoard
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionFormat.list
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionSince.ActionSinceDate
-import pl.pej.trelloilaro.api.requestBuilder.builder.member.{Members, MemberField}
-import pl.pej.trelloilaro.api.requestBuilder.builder.card.{CardAttachmentField, CardField, Card}
+import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
 import pl.pej.trelloilaro.api.requestBuilder.builder.board.{BoardField, ChecklistField, Checklists}
+import pl.pej.trelloilaro.api.requestBuilder.builder.card.{Card, CardAttachmentField, CardField}
 import pl.pej.trelloilaro.api.requestBuilder.builder.list.Lists
+import pl.pej.trelloilaro.api.requestBuilder.builder.member.{MemberField, Members}
 import pl.pej.trelloilaro.api.requestBuilder.builder.membership.Memberships
 import pl.pej.trelloilaro.api.requestBuilder.builder.organization.OrganizationField
 
-/** Writing this shit seems like too-shitty-to-be-done,
-  * but in fact at least lets you turn off your brain
-  * and enjoy the music, so it's worth it.
-  */
 class GetBoardSuite extends FunSuite {
 
   val boardId = "<<id>>"
@@ -71,7 +68,7 @@ class GetBoardSuite extends FunSuite {
     assert(builder.toString === s"/boards/$boardId?action_member=false")
   }
   test("/boards/[board_id] with action member fields") {
-    import MemberField._
+    import pl.pej.trelloilaro.api.requestBuilder.builder.member.MemberField._
     val builder = emptyBuilder.withActionMemberFields(bio, bioData, confirmed, initials)
     assert(builder.toString === s"/boards/$boardId?action_member_fields=bio,bioData,confirmed,initials")
   }
