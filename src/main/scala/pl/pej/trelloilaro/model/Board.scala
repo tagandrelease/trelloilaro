@@ -5,33 +5,10 @@ import pl.pej.trelloilaro.model.board.{LabelNames, BoardPrefs}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-/*
-
-"id" : "53aef54598654cd1f4486f08",
-"closed" : false,
-"dateLastActivity" : "2015-01-13T21:50:47.986Z",
-"dateLastView" : null,
-"desc" : "",
-"descData" : null,
-"idOrganization" : null,
-"invitations" : [ ],
-"invited" : false,
-"name" : "ApiTestBoard",
-"pinned" : false,
-"powerUps" : [ "voting" ],
-"shortLink" : "kVYrEz26",
-"shortUrl" : "https://trello.com/b/kVYrEz26",
-"starred" : null,
-"subscribed" : null,
-"url" : "https://trello.com/b/kVYrEz26/apitestboard"
-*/
-
-
-
 case class Board(
                   id: String,
                   closed: Option[Boolean] = None,
-                  dateLastActivity: Option[Option[String]] = None,
+                  dateLastActivity: Option[String] = None,
                   dateLastView: Option[Option[String]] = None,
 
                   desc: Option[String] = None,
@@ -63,7 +40,7 @@ object Board extends JsonUtil {
   implicit val boardReads: Reads[Board] = (
       (__ \ "id").read[String] and //.map(BoardId(_)) and
       (__ \ "closed").readNullable[Boolean] and
-      (__ \ "dateLastActivity").readNullableNullable[String] and
+      (__ \ "dateLastActivity").readNullable[String] and
       (__ \ "dateLastView").readNullableNullable[String] and
 
       (__ \ "desc").readNullable[String] and

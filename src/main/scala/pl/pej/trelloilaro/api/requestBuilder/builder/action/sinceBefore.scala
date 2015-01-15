@@ -6,15 +6,15 @@ import pl.pej.trelloilaro.api.requestBuilder.builder.DateParam
 
 trait ActionSinceBuilder[T] { this: RequestBuilder[T] =>
 
-  def withActionsSince(params: ActionSinceParam) = withOnlyParam("actions_since", params)
+  def withActionsSince(params: ActionSince) = withOnlyParam("actions_since", params)
 }
 
-trait ActionSinceParam extends RequestParam
+trait ActionSince extends RequestParam
 
 object ActionSince {
-  case object `null` extends ActionSinceParam
-  case object lastView extends ActionSinceParam
-  case class ActionSinceDate(d: String) extends DateParam(d) with ActionSinceParam
+  case object `null` extends ActionSince
+  case object lastView extends ActionSince
+  case class ActionSinceDate(d: String) extends DateParam(d) with ActionSince
 }
 
 //trait ActionBeforeBuilder[T] { this: RequestBuilder[T] =>
