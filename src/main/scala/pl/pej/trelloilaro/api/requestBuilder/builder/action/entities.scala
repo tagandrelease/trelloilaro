@@ -1,6 +1,6 @@
 package pl.pej.trelloilaro.api.requestBuilder.builder.action
 
-import pl.pej.trelloilaro.api.requestBuilder.{RequestBuilder}
+import pl.pej.trelloilaro.api.requestBuilder.RequestBuilder
 
 trait EntitiesBuilder[T] { this: RequestBuilder[T] =>
 

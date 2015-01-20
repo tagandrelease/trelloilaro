@@ -3,7 +3,7 @@ package pl.pej.trelloilaro.api.requestBuilder.board
 import org.scalatest.FunSuite
 import pl.pej.trelloilaro.api.requestBuilder.PutBoard
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionFormat.list
-import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionSince.ActionSinceDate
+import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionsSince.ActionsSinceDate
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
 import pl.pej.trelloilaro.api.requestBuilder.builder.board.{BoardField, ChecklistField, Checklists}
 import pl.pej.trelloilaro.api.requestBuilder.builder.card.{Card, CardAttachmentField, CardField}

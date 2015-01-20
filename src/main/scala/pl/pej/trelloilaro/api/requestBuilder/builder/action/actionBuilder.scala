@@ -4,13 +4,10 @@ import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, Req
 
 trait ActionBuilder[T] { this: RequestBuilder[T] =>
 
-  def actions(actions: Actions*): T = withParams("actions", actions)
+  protected def actionsParamName: String = "actions"
+  def withActions(actions: Actions*): T = withParams(actionsParamName, actions)
 }
 
-trait FilterActionBuilder[T] { this: RequestBuilder[T] =>
-
-  def actions(actions: Actions*): T = withParams("filter", actions)
-}
 
 trait Actions extends RequestParam
 

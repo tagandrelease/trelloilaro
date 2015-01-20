@@ -15,7 +15,7 @@ trait BoardTestData { this: Suite =>
 
   protected object BoardTestDataMinimal {
 
-    val request = getBoard.withFields()
+    val request = getBoard.withBoardFields()
 
     val json = s"""{
                  |  "id" : "$testBoardFullId"
@@ -33,7 +33,7 @@ trait BoardTestData { this: Suite =>
   protected object BoardTestDataPrimitiveFields {
 
     import board.{BoardField => F}
-    val request = getBoard.withFields(F.closed, F.dateLastActivity, F.dateLastView, F.desc, F.descData, F.idOrganization,
+    val request = getBoard.withBoardFields(F.closed, F.dateLastActivity, F.dateLastView, F.desc, F.descData, F.idOrganization,
       F.invitations, F.invited, F.name, F.pinned, F.powerUps, F.shortLink, F.shortUrl, F.starred, F.subscribed, F.url)
 
     val json = s"""{

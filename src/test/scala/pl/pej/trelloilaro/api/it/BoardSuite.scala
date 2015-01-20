@@ -37,8 +37,8 @@ class BoardSuite extends FunSuite with ApiTestBase with BoardTestData with LazyL
 
   ignore("Board: name, desc, closed, all actions with type (small fieldset)") {
 
-    val request = getBoard.actions(Actions.all).withActionFields(ActionField.`type`).withActionMemberCreator(false).withActionMember(false)
-      .withFields(BoardField.name, BoardField.desc, BoardField.closed)
+    val request = getBoard.withActions(Actions.all).withActionFields(ActionField.`type`).withActionMemberCreator(false).withActionMember(false)
+      .withBoardFields(BoardField.name, BoardField.desc, BoardField.closed)
 
     val res = testHelper(request) { b =>
       assert(b.closed.isDefined)
@@ -56,13 +56,11 @@ class BoardSuite extends FunSuite with ApiTestBase with BoardTestData with LazyL
 
   ignore("Board withActioMemberCreator(true) and withActionsLimit(3)") {
 
-    val request = getBoard.withActionMemberCreator(true).withActionsLimit(3).actions(Actions.all).withActionFields(ActionField.`type`)
+    val request = getBoard.withActionMemberCreator(true).withActionsLimit(3).withActions(Actions.all).withActionFields(ActionField.`type`)
 
     val board: Board = testHelper(request){ b =>
 
     }
-//    assert(board.action.size <= 3)
-
   }
 
 }

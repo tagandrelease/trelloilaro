@@ -4,12 +4,11 @@ import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, Req
 
 trait BoardFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withBoardFields(fields: BoardField *) = withParams("board_fields", fields)
+  /** "fields" or "board_fields" depending on method
+    */
+  def boardFieldsParamName: String = "board_fields"
 
-}
-trait FieldsBuilder[T] { this: RequestBuilder[T] =>
-
-  def withFields(fields: BoardField *) = withParams("fields", fields)
+  def withBoardFields(fields: BoardField *) = withParams(boardFieldsParamName, fields)
 
 }
 

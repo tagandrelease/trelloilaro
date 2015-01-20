@@ -3,5 +3,7 @@ import pl.pej.trelloilaro.api.requestBuilder.RequestBuilder
 
 trait ActionMemberCreatorBuilder[T] { this: RequestBuilder[T] =>
 
-  def withActionMemberCreator(value: Boolean) = withOnlyParam("action_memberCreator", value)
+  protected def actionMemberCreatorParamName: String = "action_memberCreator"
+
+  def withActionMemberCreator(value: Boolean) = withOnlyParam(actionMemberCreatorParamName, value)
 }

@@ -18,20 +18,24 @@ case class GetBoard(
                      params: Map[String, List[String]] = Map()
                    ) extends RequestBuilder[GetBoard](params)
 with ActionBuilder[GetBoard] with ActionEntitiesBuilder[GetBoard] with ActionsLimitBuilder[GetBoard] with ActionFieldsBuilder[GetBoard]
-with ActionFormatBuilder[GetBoard] with ActionSinceBuilder[GetBoard] with ActionMemberBuilder[GetBoard] with ActionMemberFieldsBuilder[GetBoard]
+with ActionFormatBuilder[GetBoard] with ActionsSinceBuilder[GetBoard] with ActionMemberBuilder[GetBoard] with ActionMemberFieldsBuilder[GetBoard]
 with ActionMemberCreatorFieldsBuilder[GetBoard] with ActionMemberCreatorBuilder[GetBoard] with CardsBuilder[GetBoard] with CardFieldsBuilder[GetBoard]
 with CardAttachmentsBuilder[GetBoard] with CardAttachmentFieldsBuilder[GetBoard] with CardChecklistsBuilder[GetBoard] with CardStickersBuilder[GetBoard]
 with BoardStarsBuilder[GetBoard] with ListFieldsBuilder[GetBoard] with ListsBuilder[GetBoard] with MembershipsBuilder[GetBoard] with MembershipsMemberBuilder[GetBoard]
 with MembershipsMemberFieldsBuilder[GetBoard] with MembersBuilder[GetBoard] with MemberFieldsBuilder[GetBoard] with MembersInvitedBuilder[GetBoard]
 with MembersInvitedFieldsBuilder[GetBoard] with ChecklistsBuilder[GetBoard] with ChecklistFieldsBuilder[GetBoard]
 with OrganizationBuilder[GetBoard] with OrganizationFieldsBuilder[GetBoard] with OrganizationMembershipsBuilder[GetBoard] with MyPrefsBuilder[GetBoard]
-with FieldsBuilder[GetBoard]
+with BoardFieldsBuilder[GetBoard]
 {
   def construct(params: Map[String,List[String]]) = GetBoard(boardId, params)
 
   override def prefix = s"/boards/$boardId"
 
   override def httpMethod: HttpMethod = GET
+
+  /** "fields" or "board_fields" depending on method
+    */
+  override def boardFieldsParamName: String = "fields"
 }
 
 /** PUT /1/boards/[board_id]
@@ -52,10 +56,49 @@ OrganizationIdBuilder[PutBoard]
 //  def construct(params: Map[String,List[String]]) = GetBoardField(boardId, fieldName, params)
 //}
 //
-////GET /1/boards/[board_id]/actions
-//case class GetBoardActions(boardId: String, params: Map[String,List[String]]) extends RequestBuilder[GetBoardField](params) {
-//  def construct(params: Map[String,List[String]]) = GetBoardField(boardId, fieldName, params)
-//}
+////
+/** GET /1/boards/[board_id]/actions
+  */
+case class GetBoardActions(
+                     boardId: String,
+                     params: Map[String, List[String]] = Map()
+                     ) extends RequestBuilder[GetBoardActions](params)
+with ActionBuilder[GetBoardActions] with EntitiesBuilder[GetBoardActions]
+with ActionsLimitBuilder[GetBoardActions] with ActionFieldsBuilder[GetBoardActions]
+with ActionFormatBuilder[GetBoardActions] with ActionsSinceBuilder[GetBoardActions]
+with ActionsBeforeBuilder[GetBoardActions] with ActionPageBuilder[GetBoardActions]
+with ActionIdModelsBuilder[GetBoardActions]
+with ActionMemberBuilder[GetBoardActions] with ActionMemberFieldsBuilder[GetBoardActions]
+with ActionMemberCreatorFieldsBuilder[GetBoardActions] with ActionMemberCreatorBuilder[GetBoardActions]
+{
+  def construct(params: Map[String,List[String]]) = GetBoardActions(boardId, params)
+
+  override def prefix = s"/boards/$boardId/actions"
+
+  override def httpMethod: HttpMethod = GET
+
+  override protected def actionsParamName: String = "filter"
+
+  override protected def actionFieldsParamName: String = "fields"
+
+  override protected def actionsLimitParamName: String = "limit"
+
+  override protected def actionFormatParamName: String = "format"
+
+  override protected def actionsSinceParamName: String = "since"
+
+  override protected def actionsBeforeParamName: String = "before"
+
+  override protected def actionMemberParamName: String = "member"
+
+  override protected def actionMemberFieldsParamName: String = "member_fields"
+
+  override protected def actionMemberCreatorParamName: String = "memberCreator"
+
+  override protected def actionMemberCreatorFieldsParamName: String = "memberCreator_fields"
+}
+
+
 //GET /1/boards/[board_id]/boardStars
 //GET /1/boards/[board_id]/cards
 //GET /1/boards/[board_id]/cards/[filter]

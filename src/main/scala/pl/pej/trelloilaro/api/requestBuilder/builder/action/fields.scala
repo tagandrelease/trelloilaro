@@ -4,7 +4,9 @@ import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, Req
 
 trait ActionFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withActionFields(actions: ActionField*) = withParams("action_fields", actions)
+  protected def actionFieldsParamName: String = "action_fields"
+
+  def withActionFields(actions: ActionField*) = withParams(actionFieldsParamName, actions)
 
 }
 

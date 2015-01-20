@@ -4,7 +4,9 @@ import pl.pej.trelloilaro.api.requestBuilder.{RequestParam, RequestBuilder}
 
 trait ActionFormatBuilder[T] { this: RequestBuilder[T] =>
 
-  def withActionFormat(format: ActionFormat) = withOnlyParam("actions_format", format)
+  protected def actionFormatParamName: String = "actions_format"
+
+  def withActionFormat(format: ActionFormat) = withOnlyParam(actionFormatParamName, format)
 
 }
 

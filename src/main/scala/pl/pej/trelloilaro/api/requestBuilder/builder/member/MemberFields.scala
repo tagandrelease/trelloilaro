@@ -3,7 +3,10 @@ package pl.pej.trelloilaro.api.requestBuilder.builder.member
 import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, RequestBuilder}
 
 trait ActionMemberCreatorFieldsBuilder[T] { this: RequestBuilder[T] =>
-  def withActionMemberCreatorFields(fields: MemberField *) = withParams("action_memberCreator_fields", fields)
+
+  protected def actionMemberCreatorFieldsParamName: String = "action_memberCreator_fields"
+
+  def withActionMemberCreatorFields(fields: MemberField *) = withParams(actionMemberCreatorFieldsParamName, fields)
 }
 
 trait CardMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
@@ -23,7 +26,8 @@ trait MembershipsMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
   def withMembershipsMemberFields(fields: MemberField *) = withParams("memberships_member_fields", fields)
 }
 trait ActionMemberFieldsBuilder[T] { this: RequestBuilder[T] =>
-  def withActionMemberFields(fields: MemberField *) = withParams("action_member_fields", fields)
+  protected def actionMemberFieldsParamName: String = "action_member_fields"
+  def withActionMemberFields(fields: MemberField *) = withParams(actionMemberFieldsParamName, fields)
 }
 
 trait MemberField extends RequestParam

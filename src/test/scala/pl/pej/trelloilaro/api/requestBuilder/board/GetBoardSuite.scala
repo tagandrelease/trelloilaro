@@ -3,7 +3,7 @@ package pl.pej.trelloilaro.api.requestBuilder.board
 import org.scalatest.FunSuite
 import pl.pej.trelloilaro.api.requestBuilder.GetBoard
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionFormat.list
-import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionSince.ActionSinceDate
+import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionsSince.ActionsSinceDate
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
 import pl.pej.trelloilaro.api.requestBuilder.builder.board.{BoardField, ChecklistField, Checklists}
 import pl.pej.trelloilaro.api.requestBuilder.builder.card.{Card, CardAttachmentField, CardField}
@@ -30,12 +30,12 @@ class GetBoardSuite extends FunSuite {
   }
 
   test("/boards/[board_id] with some actions") {
-    val builder = emptyBuilder.actions(Actions.addAttachmentToCard, Actions.addChecklistToCard).actions(Actions.addAttachmentToCard)
+    val builder = emptyBuilder.withActions(Actions.addAttachmentToCard, Actions.addChecklistToCard).withActions(Actions.addAttachmentToCard)
     assert(builder.toString === s"/boards/$boardId?actions=addAttachmentToCard,addChecklistToCard")
   }
 
   test("/boards/[board_id] with token, key and some actions") {
-    val builder = emptyBuilder.withToken("1234").withKey("5678").actions(Actions.addAttachmentToCard, Actions.addChecklistToCard).actions(Actions.addAttachmentToCard)
+    val builder = emptyBuilder.withToken("1234").withKey("5678").withActions(Actions.addAttachmentToCard, Actions.addChecklistToCard).withActions(Actions.addAttachmentToCard)
     assert(builder.toString === s"/boards/$boardId?actions=addAttachmentToCard,addChecklistToCard&key=5678&token=1234")
   }
 
@@ -49,7 +49,7 @@ class GetBoardSuite extends FunSuite {
   }
 
   test("/boards/[board_id] with since") {
-    val builder = emptyBuilder.withActionsSince(ActionSinceDate(date))
+    val builder = emptyBuilder.withActionsSince(ActionsSinceDate(date))
     assert(builder.toString === s"/boards/$boardId?actions_since=$date")
   }
 
@@ -169,7 +169,7 @@ class GetBoardSuite extends FunSuite {
   }
 
   test("/boards/[board_id] with fields") {
-    val builder = emptyBuilder.withFields(BoardField.dateLastActivity)
+    val builder = emptyBuilder.withBoardFields(BoardField.dateLastActivity)
     assert(builder.toString === s"/boards/$boardId?fields=dateLastActivity")
   }
 

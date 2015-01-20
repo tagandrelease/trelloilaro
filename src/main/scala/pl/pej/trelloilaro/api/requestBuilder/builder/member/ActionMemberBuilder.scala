@@ -4,6 +4,8 @@ import pl.pej.trelloilaro.api.requestBuilder.RequestBuilder
 
 trait ActionMemberBuilder[T] { this: RequestBuilder[T] =>
 
-  def withActionMember(value: Boolean) = withOnlyParam("action_member", value)
+  protected def actionMemberParamName: String = "action_member"
+
+  def withActionMember(value: Boolean) = withOnlyParam(actionMemberParamName, value)
 
 }
