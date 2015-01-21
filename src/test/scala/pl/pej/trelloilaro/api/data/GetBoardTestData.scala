@@ -1,16 +1,15 @@
-package pl.pej.trelloilaro.api.serialization
+package pl.pej.trelloilaro.api.data
 
 import org.scalatest.Suite
 import pl.pej.trelloilaro.api.requestBuilder.GetBoard
 import pl.pej.trelloilaro.api.requestBuilder.builder.board
+import pl.pej.trelloilaro.api.serialization.BoardId
 import pl.pej.trelloilaro.model.Board
 
 /** Triples Request-JSON-Object to be used in tests.
   */
-trait BoardTestData { this: Suite =>
+trait GetBoardTestData extends BoardId { this: Suite =>
 
-  val testBoardShortId = "kVYrEz26"
-  val testBoardFullId = "53aef54598654cd1f4486f08"
   def getBoard = GetBoard(testBoardShortId)
 
   protected object BoardTestDataMinimal {
@@ -32,7 +31,7 @@ trait BoardTestData { this: Suite =>
 
   protected object BoardTestDataPrimitiveFields {
 
-    import board.{BoardField => F}
+    import pl.pej.trelloilaro.api.requestBuilder.builder.board.{BoardField => F}
     val request = getBoard.withBoardFields(F.closed, F.dateLastActivity, F.dateLastView, F.desc, F.descData, F.idOrganization,
       F.invitations, F.invited, F.name, F.pinned, F.powerUps, F.shortLink, F.shortUrl, F.starred, F.subscribed, F.url)
 

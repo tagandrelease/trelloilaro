@@ -25,7 +25,17 @@ trait SerializationBase extends LazyLogging {
       case s: JsSuccess[Action] => s.get
       case e: JsError =>
         val msg = JsError.toFlatJson(e).toString()
-        logger.error("Json error while trying to parse a Action: " + msg)
+        logger.error("Json error while trying to parse an Action: " + msg)
+        throw JsonParseErrorException(msg)
+    }
+  }
+  def deserializeActions(actionJSON: String): List[Action] = {
+
+    Json.parse(actionJSON).validate[List[Action]] match {
+      case s: JsSuccess[List[Action]] => s.get
+      case e: JsError =>
+        val msg = JsError.toFlatJson(e).toString()
+        logger.error("Json error while trying to parse an action list: " + msg)
         throw JsonParseErrorException(msg)
     }
   }

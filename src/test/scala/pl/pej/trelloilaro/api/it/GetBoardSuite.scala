@@ -2,10 +2,10 @@ package pl.pej.trelloilaro.api.it
 
 import com.typesafe.scalalogging.LazyLogging
 import org.scalatest.FunSuite
+import pl.pej.trelloilaro.api.data.GetBoardTestData
 import pl.pej.trelloilaro.api.requestBuilder.GetBoard
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
 import pl.pej.trelloilaro.api.requestBuilder.builder.board.BoardField
-import pl.pej.trelloilaro.api.serialization.BoardTestData
 import scala.concurrent.Future
 import spray.http.HttpResponse
 import scala.concurrent.{Future, Await}
@@ -13,7 +13,7 @@ import scala.concurrent.duration._
 import pl.pej.trelloilaro.model.Board
 import pl.pej.trelloilaro.api.ApiTestBase
 
-class BoardSuite extends FunSuite with ApiTestBase with BoardTestData with LazyLogging {
+class GetBoardSuite extends FunSuite with ApiTestBase with GetBoardTestData with LazyLogging {
 
   def testHelper(request: GetBoard)(assertions: Board => Unit): Board = {
     val responseFuture: Future[Board] = client.getBoard(request)
