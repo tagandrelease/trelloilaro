@@ -14,7 +14,7 @@ trait GetBoardActionsTestData extends BoardId { this: Suite =>
 
    protected object BoardActionsTestDataMinimal {
 
-     val request = getBoardActions.withActionFields(ActionField.`type`).withActionMember(false).withActionMemberCreator(false)
+     val request = getBoardActions.withActionFields(ActionField.`type`).withMemberOrNot(false).withActionMemberCreator(false)
 
      def json = """[ {
                   |  "id" : "54b70a5c9237745d4b209511",
@@ -69,7 +69,7 @@ trait GetBoardActionsTestData extends BoardId { this: Suite =>
 
     val request = getBoardActions.withEntities(false)
       .withActionFields(ActionField.date, ActionField.idMemberCreator, ActionField.`type`)
-      .withActionMember(false)
+      .withMemberOrNot(false)
       .withActionMemberCreator(false)
 
     def json = """"""

@@ -4,7 +4,9 @@ import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, Req
 
 trait CardAttachmentFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withCardAttachmentFields(fields: CardAttachmentField *) = withParams("card_attachment_fields", fields)
+  def attachmentFieldsParamName: String = "card_attachment_fields"
+
+  def withCardAttachmentFields(fields: CardAttachmentField *) = withParams(attachmentFieldsParamName, fields)
 
 }
 
@@ -21,4 +23,5 @@ object CardAttachmentField {
   case object name extends CardAttachmentField
   case object previews extends CardAttachmentField
   case object url extends CardAttachmentField
+
 }

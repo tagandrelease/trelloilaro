@@ -4,5 +4,6 @@ import pl.pej.trelloilaro.api.requestBuilder.RequestBuilder
 
 trait CardStickersBuilder[T] { this: RequestBuilder[T] =>
 
-  def withCardStickers(stickersAllowed: Boolean) = withOnlyParam("card_stickers", stickersAllowed)
+  def stickersParamName = "card_stickers"
+  def withCardStickers(stickersAllowed: Boolean) = withOnlyParam(stickersParamName, stickersAllowed)
 }

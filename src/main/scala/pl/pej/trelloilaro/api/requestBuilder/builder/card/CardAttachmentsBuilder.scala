@@ -4,7 +4,9 @@ import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, Req
 
 trait CardAttachmentsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withCardAttachments(attachment: Boolean) = withOnlyParam( "card_attachments", attachment)
+  def attachmentsParamName: String = "card_attachments"
 
-  def withCardAttachmentsCoverOnly = withOnlyParam( "card_attachments", "cover")
+  def withCardAttachments(attachment: Boolean) = withOnlyParam( attachmentsParamName, attachment)
+
+  def withCardAttachmentsCoverOnly = withOnlyParam(attachmentsParamName, "cover")
 }

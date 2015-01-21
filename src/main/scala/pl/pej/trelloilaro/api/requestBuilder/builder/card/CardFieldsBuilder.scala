@@ -4,7 +4,9 @@ import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, Req
 
 trait CardFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withCardFields(cardFields: CardField *) = withParams("card_fields", cardFields)
+  protected def cardFieldsParamName = "card_fields"
+
+  def withCardFields(cardFields: CardField *) = withParams(cardFieldsParamName, cardFields)
 
 }
 

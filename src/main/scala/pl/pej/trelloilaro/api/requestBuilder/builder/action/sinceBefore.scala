@@ -4,32 +4,35 @@ import pl.pej.trelloilaro.api.requestBuilder.{RequestParam, RequestBuilder}
 import pl.pej.trelloilaro.api.requestBuilder.builder.DateParam
 
 
-trait ActionsSinceBuilder[T] { this: RequestBuilder[T] =>
+trait SinceBuilder[T] { this: RequestBuilder[T] =>
 
-  protected def actionsSinceParamName: String = "actions_since"
+  protected def sinceParamName: String = "since"
   
-  def withActionsSince(params: ActionsSince) = withOnlyParam(actionsSinceParamName, params)
+  def since(params: Since) = withOnlyParam(sinceParamName, params)
 }
 
-trait ActionsSince extends RequestParam
+trait Since extends RequestParam
 
-object ActionsSince {
-  case object `null` extends ActionsSince
-  case object lastView extends ActionsSince
-  case class ActionsSinceDate(d: String) extends DateParam(d) with ActionsSince
+object Since {
+  case object `null` extends Since
+
+  /** Supported in board/id
+    * Not supported in board/id/cards */
+//  case object lastView extends Since
+  case class SinceDate(d: String) extends DateParam(d) with Since
 }
 
-trait ActionsBeforeBuilder[T] { this: RequestBuilder[T] =>
+trait BeforeBuilder[T] { this: RequestBuilder[T] =>
   
-  protected def actionsBeforeParamName: String = "actions_before"
+  protected def beforeParamName: String = "before"
   
   
-  def withActionsBefore(params: ActionBeforeParam) = withOnlyParam(actionsBeforeParamName, params)
+  def before(params: Before) = withOnlyParam(beforeParamName, params)
 }
 
-trait ActionBeforeParam extends RequestParam
+trait Before extends RequestParam
 
-object ActionsBefore {
-  case object `null` extends ActionBeforeParam
-  case class ActionBeforeDate(d: String) extends DateParam(d) with ActionBeforeParam
+object Before {
+  case object `null` extends Before
+  case class BeforeDate(d: String) extends DateParam(d) with Before
 }

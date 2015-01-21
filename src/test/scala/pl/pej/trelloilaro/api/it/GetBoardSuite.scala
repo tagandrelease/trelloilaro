@@ -37,7 +37,7 @@ class GetBoardSuite extends FunSuite with ApiTestBase with GetBoardTestData with
 
   ignore("Board: name, desc, closed, all actions with type (small fieldset)") {
 
-    val request = getBoard.withActions(Actions.all).withActionFields(ActionField.`type`).withActionMemberCreator(false).withActionMember(false)
+    val request = getBoard.withActions(Actions.all).withActionFields(ActionField.`type`).withActionMemberCreator(false).withMemberOrNot(false)
       .withBoardFields(BoardField.name, BoardField.desc, BoardField.closed)
 
     val res = testHelper(request) { b =>
@@ -56,7 +56,7 @@ class GetBoardSuite extends FunSuite with ApiTestBase with GetBoardTestData with
 
   ignore("Board withActioMemberCreator(true) and withActionsLimit(3)") {
 
-    val request = getBoard.withActionMemberCreator(true).withActionsLimit(3).withActions(Actions.all).withActionFields(ActionField.`type`)
+    val request = getBoard.withActionMemberCreator(true).withLimit(3).withActions(Actions.all).withActionFields(ActionField.`type`)
 
     val board: Board = testHelper(request){ b =>
 

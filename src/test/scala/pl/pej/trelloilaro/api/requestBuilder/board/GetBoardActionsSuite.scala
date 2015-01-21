@@ -109,7 +109,7 @@ class GetBoardActionsSuite extends FunSuite {
 //  Valid Values: a number from 0 to 1000
 
   test("/boards/[board_id]/actions with limit") {
-    val builder = emptyBuilder.withActionsLimit(555)
+    val builder = emptyBuilder.withLimit(555)
 
       assert(builder.toString === s"/boards/$boardId/actions?limit=555")
   }
@@ -129,15 +129,15 @@ class GetBoardActionsSuite extends FunSuite {
 //  Valid Values: A date, null or lastView
 
   test("/boards/[board_id]/actions with since") {
-    val builder = emptyBuilder.withActionsSince(ActionsSince.lastView)
+    val builder = emptyBuilder.since(Since.`null`)
 
-      assert(builder.toString === s"/boards/$boardId/actions?since=lastView")
+      assert(builder.toString === s"/boards/$boardId/actions?since=null")
   }
 //  before (optional)
 //  Valid Values: A date, or null
 
   test("/boards/[board_id]/actions with before") {
-    val builder = emptyBuilder.withActionsBefore(ActionsBefore.ActionBeforeDate("2000-01-01"))
+    val builder = emptyBuilder.before(Before.BeforeDate("2000-01-01"))
 
       assert(builder.toString === s"/boards/$boardId/actions?before=2000-01-01")
   }
@@ -165,7 +165,7 @@ class GetBoardActionsSuite extends FunSuite {
 //  false
 
   test("/boards/[board_id]/actions with member") {
-    val builder = emptyBuilder.withActionMember(true).withActionMember(true)
+    val builder = emptyBuilder.withMemberOrNot(true).withMemberOrNot(true)
 
       assert(builder.toString === s"/boards/$boardId/actions?member=true")
   }

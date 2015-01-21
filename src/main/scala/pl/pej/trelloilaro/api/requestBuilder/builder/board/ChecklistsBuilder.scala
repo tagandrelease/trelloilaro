@@ -4,12 +4,9 @@ import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, Req
 
 trait ChecklistsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withChecklists(checklists: Checklists) = withOnlyParam("checklists", checklists)
+  protected def checklistsParamName: String = "checklists"
 
-}
-trait CardChecklistsBuilder[T] { this: RequestBuilder[T] =>
-
-  def withCardChecklists(checklists: Checklists) = withOnlyParam("card_checklists", checklists)
+  def withChecklists(checklists: Checklists) = withOnlyParam(checklistsParamName, checklists)
 
 }
 

@@ -17,10 +17,10 @@ case class GetBoard(
                      boardId: String,
                      params: Map[String, List[String]] = Map()
                    ) extends RequestBuilder[GetBoard](params)
-with ActionBuilder[GetBoard] with ActionEntitiesBuilder[GetBoard] with ActionsLimitBuilder[GetBoard] with ActionFieldsBuilder[GetBoard]
-with ActionFormatBuilder[GetBoard] with ActionsSinceBuilder[GetBoard] with ActionMemberBuilder[GetBoard] with ActionMemberFieldsBuilder[GetBoard]
+with ActionBuilder[GetBoard] with ActionEntitiesBuilder[GetBoard] with LimitBuilder[GetBoard] with ActionFieldsBuilder[GetBoard]
+with ActionFormatBuilder[GetBoard] with SinceBuilder[GetBoard] with BeforeBuilder[GetBoard] with MemberOrNotBuilder[GetBoard] with ActionMemberFieldsBuilder[GetBoard]
 with ActionMemberCreatorFieldsBuilder[GetBoard] with ActionMemberCreatorBuilder[GetBoard] with CardsBuilder[GetBoard] with CardFieldsBuilder[GetBoard]
-with CardAttachmentsBuilder[GetBoard] with CardAttachmentFieldsBuilder[GetBoard] with CardChecklistsBuilder[GetBoard] with CardStickersBuilder[GetBoard]
+with CardAttachmentsBuilder[GetBoard] with CardAttachmentFieldsBuilder[GetBoard] with CardStickersBuilder[GetBoard]
 with BoardStarsBuilder[GetBoard] with ListFieldsBuilder[GetBoard] with ListsBuilder[GetBoard] with MembershipsBuilder[GetBoard] with MembershipsMemberBuilder[GetBoard]
 with MembershipsMemberFieldsBuilder[GetBoard] with MembersBuilder[GetBoard] with MemberFieldsBuilder[GetBoard] with MembersInvitedBuilder[GetBoard]
 with MembersInvitedFieldsBuilder[GetBoard] with ChecklistsBuilder[GetBoard] with ChecklistFieldsBuilder[GetBoard]
@@ -36,6 +36,16 @@ with BoardFieldsBuilder[GetBoard]
   /** "fields" or "board_fields" depending on method
     */
   override def boardFieldsParamName: String = "fields"
+
+  override protected def memberOrNotParamName: String = "action_member"
+
+  override protected def checklistsParamName: String = "checklists"
+
+  override protected def limitParamName: String = "actions_limit"
+
+  override protected def sinceParamName: String = "actions_since"
+
+  override protected def beforeParamName: String = "actions_before"
 }
 
 /** PUT /1/boards/[board_id]
@@ -49,6 +59,8 @@ OrganizationIdBuilder[PutBoard]
   override def prefix = s"/boards/$boardId"
 
   override def httpMethod: HttpMethod = PUT
+
+
 }
 
 //GET /1/boards/[board_id/[field]
@@ -64,11 +76,11 @@ case class GetBoardActions(
                      params: Map[String, List[String]] = Map()
                      ) extends RequestBuilder[GetBoardActions](params)
 with ActionBuilder[GetBoardActions] with EntitiesBuilder[GetBoardActions]
-with ActionsLimitBuilder[GetBoardActions] with ActionFieldsBuilder[GetBoardActions]
-with ActionFormatBuilder[GetBoardActions] with ActionsSinceBuilder[GetBoardActions]
-with ActionsBeforeBuilder[GetBoardActions] with ActionPageBuilder[GetBoardActions]
+with LimitBuilder[GetBoardActions] with ActionFieldsBuilder[GetBoardActions]
+with ActionFormatBuilder[GetBoardActions] with SinceBuilder[GetBoardActions]
+with BeforeBuilder[GetBoardActions] with ActionPageBuilder[GetBoardActions]
 with ActionIdModelsBuilder[GetBoardActions]
-with ActionMemberBuilder[GetBoardActions] with ActionMemberFieldsBuilder[GetBoardActions]
+with MemberOrNotBuilder[GetBoardActions] with ActionMemberFieldsBuilder[GetBoardActions]
 with ActionMemberCreatorFieldsBuilder[GetBoardActions] with ActionMemberCreatorBuilder[GetBoardActions]
 {
   def construct(params: Map[String,List[String]]) = GetBoardActions(boardId, params)
@@ -81,15 +93,11 @@ with ActionMemberCreatorFieldsBuilder[GetBoardActions] with ActionMemberCreatorB
 
   override protected def actionFieldsParamName: String = "fields"
 
-  override protected def actionsLimitParamName: String = "limit"
-
   override protected def actionFormatParamName: String = "format"
 
-  override protected def actionsSinceParamName: String = "since"
+  override protected def beforeParamName: String = "before"
 
-  override protected def actionsBeforeParamName: String = "before"
-
-  override protected def actionMemberParamName: String = "member"
+  override protected def memberOrNotParamName: String = "member"
 
   override protected def actionMemberFieldsParamName: String = "member_fields"
 
@@ -101,6 +109,35 @@ with ActionMemberCreatorFieldsBuilder[GetBoardActions] with ActionMemberCreatorB
 
 //GET /1/boards/[board_id]/boardStars
 //GET /1/boards/[board_id]/cards
+case class GetBoardCards(
+                     boardId: String,
+                     params: Map[String, List[String]] = Map()
+                     ) extends RequestBuilder[GetBoardCards](params)
+with ActionBuilder[GetBoardCards]
+with CardsBuilder[GetBoardCards] with CardFieldsBuilder[GetBoardCards]
+with CardAttachmentsBuilder[GetBoardCards] with CardAttachmentFieldsBuilder[GetBoardCards]
+with ChecklistsBuilder[GetBoardCards] with CardStickersBuilder[GetBoardCards]
+with MemberOrNotBuilder[GetBoardCards] with MemberFieldsBuilder[GetBoardCards]
+with LimitBuilder[GetBoardCards] with SinceBuilder[GetBoardCards]
+with BeforeBuilder[GetBoardCards]
+{
+  def construct(params: Map[String,List[String]]) = GetBoardCards(boardId, params)
+
+  override def prefix = s"/boards/$boardId/cards"
+
+  override def httpMethod: HttpMethod = GET
+
+  override def attachmentsParamName: String = "attachments"
+
+  override def attachmentFieldsParamName: String = "attachment_fields"
+
+  override def stickersParamName: String = "stickers"
+
+  override protected def cardsParamName: String = "filter"
+
+  override protected def cardFieldsParamName: String = "fields"
+}
+
 //GET /1/boards/[board_id]/cards/[filter]
 //GET /1/boards/[board_id]/cards/[idCard]
 
