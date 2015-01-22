@@ -88,9 +88,9 @@ trait GetBoardActionsTestData extends BoardId { this: Suite =>
 
     def assertFieldsDefined(b: List[Action]): Unit = {
 
-      b.forall { a: Action => a.`type`.isDefined}
-      b.forall { a: Action => a.date.isDefined}
-      b.forall { a: Action => a.idMemberCreator.isDefined}
+      assert(b.forall { a: Action => a.`type`.isDefined})
+      assert(b.forall { a: Action => a.date.isDefined})
+      assert(b.forall { a: Action => a.idMemberCreator.isDefined})
     }
   }
 

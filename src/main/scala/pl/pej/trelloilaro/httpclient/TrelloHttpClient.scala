@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.LazyLogging
 import pl.pej.trelloilaro.httpclient.TrelloHttpClient.JsonParseErrorException
 import spray.client.pipelining
 import scala.concurrent.{Promise, Future, ExecutionContext}
-import pl.pej.trelloilaro.api.requestBuilder.{GetBoardActions, RequestBuilder, GetBoard}
+import pl.pej.trelloilaro.api.requestBuilder.{GetBoardCards, GetBoardActions, RequestBuilder, GetBoard}
 import pl.pej.trelloilaro.model._
 import spray.http.{HttpCharsets, HttpCharset, HttpResponse}
 import akka.util.Timeout
@@ -60,6 +60,24 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
         case e: JsError =>
           val msg = JsError.toFlatJson(e).toString()
           logger.error("Json error while trying to parse a list of actions: " + msg)
+          throw JsonParseErrorException(msg)
+      }
+    }
+  }
+
+  def getBoardCards(requestBuilder: GetBoardCards): Future[List[Card]] = {
+    getStringResponse(requestBuilder).map { json =>
+      val parsed = Json.parse(json)
+
+      logger.debug("Cards parsed: " + Json.prettyPrint(parsed))
+
+      parsed.validate[List[Card]] match {
+        case s: JsSuccess[List[Card]] =>
+
+          s.get
+        case e: JsError =>
+          val msg = JsError.toFlatJson(e).toString()
+          logger.error("Json error while trying to parse a list of cards: " + msg)
           throw JsonParseErrorException(msg)
       }
     }

@@ -62,7 +62,7 @@ object Board extends JsonUtil {
     )(Board.apply _)
 
 
-//  implicit val boardFormat: Format[Board] = Format(boardReads, boardWrites)
+  implicit val boardFormat: Format[Board] = Format(boardReads, boardWrites)
 
 }
 

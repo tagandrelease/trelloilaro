@@ -40,10 +40,10 @@ trait SerializationBase extends LazyLogging {
     }
   }
 
-  def deserializeCard(cardJSON: String): Card = {
+  def deserializeCards(cardJSON: String): List[Card] = {
 
-    Json.parse(cardJSON).validate[Card] match {
-      case s: JsSuccess[Card] => s.get
+    Json.parse(cardJSON).validate[List[Card]] match {
+      case s: JsSuccess[List[Card]] => s.get
       case e: JsError =>
         val msg = JsError.toFlatJson(e).toString()
         logger.error("Json error while trying to parse a Card: " + msg)
