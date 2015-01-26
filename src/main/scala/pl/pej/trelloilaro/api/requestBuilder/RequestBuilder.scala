@@ -29,7 +29,7 @@ abstract class RequestBuilder[+T](params: Map[String, List[String]]) {
 
   def construct(value: Map[String, List[String]]): T
 
-  def prefix: String = ""
+  def prefix: String
 
   def withToken(token: String): T = withParam("token", token)
   def withKey(key: String): T = withParam("key", key)

@@ -1,11 +1,11 @@
 package pl.pej.trelloilaro.api.serialization
 
 import org.scalatest.FunSuite
-import pl.pej.trelloilaro.api.data.{GetBoardCardsTestData, GetBoardActionsTestData, GetBoardTestData}
-import pl.pej.trelloilaro.model.Card
+import pl.pej.trelloilaro.api.data.{GetBoardChecklistsTestData, GetBoardCardsTestData, GetBoardActionsTestData, GetBoardTestData}
+import pl.pej.trelloilaro.model.{Checklist, Card}
 
 class SerializationSuite extends FunSuite with SerializationBase with GetBoardTestData
-  with GetBoardActionsTestData with GetBoardCardsTestData {
+  with GetBoardActionsTestData with GetBoardCardsTestData with GetBoardChecklistsTestData {
 
   test("Deserialize minimal Board") {
 
@@ -26,6 +26,11 @@ class SerializationSuite extends FunSuite with SerializationBase with GetBoardTe
   test("Deserialize primitive fields + badges Board Cards") {
     val cards: List[Card] = deserializeCards(BoardCardsTestDataPrimitiveFields.json)
     assert(cards === BoardCardsTestDataPrimitiveFields.example)
+  }
+
+  test("Deserialize checklists without cards") {
+    val cards: List[Checklist] = deserializeChecklists(BoardChecklistsTestData.json)
+    assert(cards === BoardChecklistsTestData.example)
   }
 
 }

@@ -6,8 +6,9 @@ import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionFormat.list
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.Before.BeforeDate
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.Since.SinceDate
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
-import pl.pej.trelloilaro.api.requestBuilder.builder.board.{BoardField, ChecklistField, Checklists}
+import pl.pej.trelloilaro.api.requestBuilder.builder.board.BoardField
 import pl.pej.trelloilaro.api.requestBuilder.builder.card.{Card, CardAttachmentField, CardField}
+import pl.pej.trelloilaro.api.requestBuilder.builder.checklist.{Checklists, ChecklistField}
 import pl.pej.trelloilaro.api.requestBuilder.builder.list.Lists
 import pl.pej.trelloilaro.api.requestBuilder.builder.member.{MemberField, Members}
 import pl.pej.trelloilaro.api.requestBuilder.builder.membership.Memberships

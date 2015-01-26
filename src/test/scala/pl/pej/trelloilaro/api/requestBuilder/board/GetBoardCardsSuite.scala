@@ -2,9 +2,9 @@ package pl.pej.trelloilaro.api.requestBuilder.board
 
 import org.scalatest.FunSuite
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{Before, Since, Actions}
-import pl.pej.trelloilaro.api.requestBuilder.builder.board.Checklists
 import pl.pej.trelloilaro.api.requestBuilder.builder.card.{CardField, Card, CardAttachmentField}
 import pl.pej.trelloilaro.api.requestBuilder.GetBoardCards
+import pl.pej.trelloilaro.api.requestBuilder.builder.checklist.Checklists
 import pl.pej.trelloilaro.api.requestBuilder.builder.member.MemberField
 
 class GetBoardCardsSuite extends FunSuite {
@@ -152,16 +152,23 @@ class GetBoardCardsSuite extends FunSuite {
 //  status
 //  url
 //  username
-//  checkItemStates (optional)
-//  Default: false
-//  Valid Values:
-//  true
-//  false
 
   test("/boards/[board_id]/cards member_fields") {
     val builder = emptyBuilder.withMemberFields(MemberField.bio,MemberField.bioData,MemberField.fullName)
 
     assert(builder.toString === s"/boards/$boardId/cards?member_fields=bio,bioData,fullName")
+  }
+
+  //  checkItemStates (optional)
+//  Default: false
+//  Valid Values:
+//  true
+//  false
+
+  test("/boards/[board_id]/cards checkItemStates") {
+    val builder = emptyBuilder.withCheckItemStates(false)
+
+    assert(builder.toString === s"/boards/$boardId/cards?checkItemStates=false")
   }
 
   //  checklists (optional)

@@ -2,7 +2,9 @@ package pl.pej.trelloilaro.api.requestBuilder
 
 import pl.pej.trelloilaro.api.requestBuilder.builder.board._
 import pl.pej.trelloilaro.api.requestBuilder.builder.action._
+import pl.pej.trelloilaro.api.requestBuilder.builder.checklist.{CheckItemsBuilder, CheckItemFieldsBuilder, ChecklistsBuilder, ChecklistFieldsBuilder}
 import pl.pej.trelloilaro.api.requestBuilder.builder.common.{DescBuilder, NameBuilder}
+import pl.pej.trelloilaro.api.requestBuilder.builder.itemState.CheckItemStatesBuilder
 import pl.pej.trelloilaro.api.requestBuilder.builder.member._
 import pl.pej.trelloilaro.api.requestBuilder.builder.card._
 import pl.pej.trelloilaro.api.requestBuilder.builder.list.{ListsBuilder, ListFieldsBuilder}
@@ -119,7 +121,7 @@ with CardAttachmentsBuilder[GetBoardCards] with CardAttachmentFieldsBuilder[GetB
 with ChecklistsBuilder[GetBoardCards] with CardStickersBuilder[GetBoardCards]
 with MemberOrNotBuilder[GetBoardCards] with MemberFieldsBuilder[GetBoardCards]
 with LimitBuilder[GetBoardCards] with SinceBuilder[GetBoardCards]
-with BeforeBuilder[GetBoardCards]
+with BeforeBuilder[GetBoardCards] with CheckItemStatesBuilder[GetBoardCards]
 {
   def construct(params: Map[String,List[String]]) = GetBoardCards(boardId, params)
 
@@ -142,6 +144,25 @@ with BeforeBuilder[GetBoardCards]
 //GET /1/boards/[board_id]/cards/[idCard]
 
 //GET /1/boards/[board_id]/checklists
+case class GetBoardChecklists(
+                          boardId: String,
+                          params: Map[String, List[String]] = Map()
+                          ) extends RequestBuilder[GetBoardChecklists](params)
+with CardsBuilder[GetBoardChecklists] with CardFieldsBuilder[GetBoardChecklists]
+with ChecklistsBuilder[GetBoardChecklists] with ChecklistFieldsBuilder[GetBoardChecklists]
+with CheckItemsBuilder[GetBoardChecklists] with CheckItemFieldsBuilder[GetBoardChecklists]
+{
+
+  override def prefix = s"/boards/$boardId/checklists"
+
+  override def construct(value: Map[String, List[String]]): GetBoardChecklists = GetBoardChecklists(boardId, value)
+
+  override def httpMethod: HttpMethod = GET
+
+  override protected def checklistsParamName: String = "filter"
+
+  override protected def checklistFieldsParamName: String = "fields"
+}
 //GET /1/boards/[board_id]/deltas
 //GET /1/boards/[board_id]/lists
 //GET /1/boards/[board_id]/lists/[filter]

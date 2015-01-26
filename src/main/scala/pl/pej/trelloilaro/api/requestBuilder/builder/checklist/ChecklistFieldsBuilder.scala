@@ -1,10 +1,12 @@
-package pl.pej.trelloilaro.api.requestBuilder.builder.board
+package pl.pej.trelloilaro.api.requestBuilder.builder.checklist
 
-import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestParam, RequestBuilder}
+import pl.pej.trelloilaro.api.requestBuilder.{AllRequestParam, RequestBuilder, RequestParam}
 
 trait ChecklistFieldsBuilder[T] { this: RequestBuilder[T] =>
 
-  def withChecklistFields(checklistFields: ChecklistField *) = withParams("checklist_fields", checklistFields)
+  protected def checklistFieldsParamName: String = "checklist_fields"
+
+  def withChecklistFields(checklistFields: ChecklistField *) = withParams(checklistFieldsParamName, checklistFields)
 
 }
 

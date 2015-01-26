@@ -95,4 +95,35 @@ trait GetBoardActionsTestData extends BoardId { this: Suite =>
   }
 
 
+  protected object BoardActionsFullTestDataNoMembers {
+
+    val request = getBoardActions.withEntities(true)
+      .withActionFields(ActionField.all)
+      .withMemberOrNot(false)
+      .withActionMemberCreator(true)
+
+    def json = """"""
+
+    def example = ???
+
+    /*List(
+      Action("54b70a5c9237745d4b209511", `type` = Some("updateBoard")),
+      Action("54b70a1ff97d7ca49585912f", `type` = Some("unconfirmedBoardInvitation")),
+      Action("54b709fba5a61328b90ccdb6", `type` = Some("enablePowerUp")),
+      Action("54b5933843bebd1aa598e90d", `type` = Some("createCard")),
+      Action("54b5932f460c94e54a4a1b81", `type` = Some("updateCard")),
+      Action("54b5932a21340cd822a5c8db", `type` = Some("createCard")),
+      Action("54b5931f26ceced2fe86ead6", `type` = Some("addMemberToCard")),
+      Action("54615567b38e3685c4910615", `type` = Some("createCard")),
+      Action("53aef54598654cd1f4486f0d", `type` = Some("createBoard"))
+    )*/
+
+    def assertFieldsDefined(b: List[Action]): Unit = {
+
+      assert(b.forall { a: Action => a.`type`.isDefined})
+      assert(b.forall { a: Action => a.date.isDefined})
+      assert(b.forall { a: Action => a.idMemberCreator.isDefined})
+    }
+  }
+
 }

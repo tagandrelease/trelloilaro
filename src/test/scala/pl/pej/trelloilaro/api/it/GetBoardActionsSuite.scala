@@ -26,8 +26,11 @@ class GetBoardActionsSuite extends FunSuite with ApiTestBase with GetBoardAction
   ignore("Minimal actions (with no fields)") {
     testHelper(BoardActionsTestDataMinimal.request)(BoardActionsTestDataMinimal.assertFieldsDefined)
   }
-  test("All primitive fields of actions") {
+  ignore("All primitive fields of actions") {
     testHelper(BoardActionsTestDataPrimitiveFields.request)(BoardActionsTestDataPrimitiveFields.assertFieldsDefined)
+  }
+  test("Actions with data") {
+    testHelper(BoardActionsFullTestDataNoMembers.request)(BoardActionsFullTestDataNoMembers.assertFieldsDefined)
   }
 
 }

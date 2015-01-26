@@ -5,7 +5,7 @@ import pl.pej.trelloilaro.api.requestBuilder.PutBoard
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionFormat.list
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.Since.SinceDate
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
-import pl.pej.trelloilaro.api.requestBuilder.builder.board.{BoardField, ChecklistField, Checklists}
+import pl.pej.trelloilaro.api.requestBuilder.builder.board.BoardField
 import pl.pej.trelloilaro.api.requestBuilder.builder.card.{Card, CardAttachmentField, CardField}
 import pl.pej.trelloilaro.api.requestBuilder.builder.common.{ValueTooShortException, ValueTooLongException}
 import pl.pej.trelloilaro.api.requestBuilder.builder.list.Lists
