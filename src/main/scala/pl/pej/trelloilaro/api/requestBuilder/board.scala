@@ -165,6 +165,23 @@ with CheckItemsBuilder[GetBoardChecklists] with CheckItemFieldsBuilder[GetBoardC
 }
 //GET /1/boards/[board_id]/deltas
 //GET /1/boards/[board_id]/lists
+case class GetBoardLists(
+                               boardId: String,
+                               params: Map[String, List[String]] = Map()
+                               ) extends RequestBuilder[GetBoardLists](params)
+with CardsBuilder[GetBoardLists] with CardFieldsBuilder[GetBoardLists]
+with ListsBuilder[GetBoardLists] with ListFieldsBuilder[GetBoardLists]
+{
+  override def prefix = s"/boards/$boardId/lists"
+
+  override def construct(value: Map[String, List[String]]): GetBoardLists = GetBoardLists(boardId, value)
+
+  override def httpMethod: HttpMethod = GET
+
+  override protected def listsParamName: String = "filter"
+
+  override protected def listFieldsParamName: String = "fields"
+}
 //GET /1/boards/[board_id]/lists/[filter]
 //GET /1/boards/[board_id]/members
 //GET /1/boards/[board_id]/members/[filter]

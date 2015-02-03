@@ -1,13 +1,12 @@
 package pl.pej.trelloilaro.api.data
 
 import org.scalatest.Suite
+import pl.pej.trelloilaro.api.model.ChecklistJson
+import pl.pej.trelloilaro.api.model.checklist.CheckItemJson
+import pl.pej.trelloilaro.api.requestBuilder.GetBoardChecklists
 import pl.pej.trelloilaro.api.requestBuilder.builder.card.Card
-import pl.pej.trelloilaro.api.requestBuilder.builder.checklist.{CheckItemField, ChecklistField, Checklists, CheckItems}
-import pl.pej.trelloilaro.api.requestBuilder.{GetBoardChecklists, GetBoardActions}
-import pl.pej.trelloilaro.api.requestBuilder.builder.action.ActionField
+import pl.pej.trelloilaro.api.requestBuilder.builder.checklist.{CheckItemField, CheckItems, ChecklistField}
 import pl.pej.trelloilaro.api.serialization.BoardId
-import pl.pej.trelloilaro.model.checklist.CheckItem
-import pl.pej.trelloilaro.model.{Checklist, Action}
 
 /** Triples Request-JSON-Object to be used in tests.
    */
@@ -25,10 +24,10 @@ trait GetBoardChecklistsTestData extends BoardId { this: Suite =>
                   |""".stripMargin
 
      def example = List(
-      Checklist("54bfded3b3fab88459a29a6c")
+      ChecklistJson("54bfded3b3fab88459a29a6c")
      )
 
-     def assertFieldsDefined(b: List[Checklist]): Unit = {
+     def assertFieldsDefined(b: List[ChecklistJson]): Unit = {
 
      }
    }
@@ -78,29 +77,29 @@ trait GetBoardChecklistsTestData extends BoardId { this: Suite =>
                  |""".stripMargin
 
     def example = List(
-      Checklist(
+      ChecklistJson(
         id = "54bfded3b3fab88459a29a6c",
         name = Some("Checklist"),
         idBoard = Some("53aef54598654cd1f4486f08"),
         idCard = Some("54b5933743bebd1aa598e90c"),
         pos = Some(16384),
         checkItems = Some(List(
-          CheckItem(
+          CheckItemJson(
             state = Some("complete"),
             id = "54bfded8169333049807f2d2",
             name = Some("Elekti bongustan bieron"),
             pos = Some(16928)),
-          CheckItem(
+          CheckItemJson(
             state = Some("complete"),
             id = "54bfdedd04e6613bff133574",
             name = Some("Aĉeti ĝin"),
             pos = Some(34045)),
-          CheckItem(
+          CheckItemJson(
             state = Some("incomplete"),
             id = "54bfdee536f4c5c712dd7e0e",
             name = Some("Enverŝi en glason"),
             pos = Some(51367)),
-          CheckItem(
+          CheckItemJson(
             state = Some("incomplete"),
             id = "54bfdeea261eb6b0e754ee42",
             name = Some("Fortrinki"),
@@ -109,13 +108,13 @@ trait GetBoardChecklistsTestData extends BoardId { this: Suite =>
         )
     ))
 
-    def assertFieldsDefined(b: List[Checklist]): Unit = {
-      b.forall { c: Checklist => c.idBoard.isDefined}
-      b.forall { c: Checklist => c.idCard.isDefined}
-      b.forall { c: Checklist => c.checkItems.isDefined}
-      b.forall { c: Checklist => c.name.isDefined}
-      b.forall { c: Checklist => c.pos.isDefined}
-      b.forall { c: Checklist => c.checkItems.map{ items =>
+    def assertFieldsDefined(b: List[ChecklistJson]): Unit = {
+      b.forall { c: ChecklistJson => c.idBoard.isDefined}
+      b.forall { c: ChecklistJson => c.idCard.isDefined}
+      b.forall { c: ChecklistJson => c.checkItems.isDefined}
+      b.forall { c: ChecklistJson => c.name.isDefined}
+      b.forall { c: ChecklistJson => c.pos.isDefined}
+      b.forall { c: ChecklistJson => c.checkItems.map{ items =>
         items.forall{ i =>
           i.name.isDefined && i.pos.isDefined && i.state.isDefined
         }

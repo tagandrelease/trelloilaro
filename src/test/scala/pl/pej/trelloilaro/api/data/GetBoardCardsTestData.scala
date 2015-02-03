@@ -5,8 +5,8 @@ import pl.pej.trelloilaro.api.requestBuilder.builder.card.CardField
 import pl.pej.trelloilaro.api.requestBuilder.{GetBoardCards, GetBoardActions}
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{Actions, ActionField}
 import pl.pej.trelloilaro.api.serialization.BoardId
-import pl.pej.trelloilaro.model._
-import pl.pej.trelloilaro.model.card.{Badges, IdsInCard, CheckItemState}
+import pl.pej.trelloilaro.api.model._
+import pl.pej.trelloilaro.api.model.card._
 
 /** Triples Request-JSON-Object to be used in tests.
    */
@@ -27,12 +27,12 @@ trait GetBoardCardsTestData extends BoardId { this: Suite =>
                   |} ]""".stripMargin
 
      def example = List(
-       Card("54b5932921340cd822a5c8da"),
-       Card("54615567b38e3685c4910614"),
-       Card("54b5933743bebd1aa598e90c")
+       CardJson("54b5932921340cd822a5c8da"),
+       CardJson("54615567b38e3685c4910614"),
+       CardJson("54b5933743bebd1aa598e90c")
      )
 
-     def assertFieldsDefined(b: List[Card]): Unit = {
+     def assertFieldsDefined(b: List[CardJson]): Unit = {
 
      }
    }
@@ -91,18 +91,18 @@ trait GetBoardCardsTestData extends BoardId { this: Suite =>
                  |} ]
                  |""".stripMargin
 
-    def example = List(Card(
+    def example = List(CardJson(
       id = "54b5933743bebd1aa598e90c",
       checkItemStates = Some(List(
-        CheckItemState("54bfded8169333049807f2d2", "complete"),
-        CheckItemState("54bfdedd04e6613bff133574", "complete")
+        CheckItemStateJson("54bfded8169333049807f2d2", "complete"),
+        CheckItemStateJson("54bfdedd04e6613bff133574", "complete")
       )),
       closed = Some(false),
       dateLastActivity = Some("2015-01-21T17:16:29.280Z"),
       desc = Some(""),
-      descData = Some(None),
+//      descData = Some(None),
       email = Some(None),
-      ids = IdsInCard(
+      ids = IdsInCardJson(
         idBoard = Some("53aef54598654cd1f4486f08"),
         idList = Some("53aef54598654cd1f4486f0b"),
         idMembersVoted = Some(List()),
@@ -116,7 +116,7 @@ trait GetBoardCardsTestData extends BoardId { this: Suite =>
       name = Some("Have a beer"),
       pos = Some(65535),
       shortLink = Some("RJCblPT4"),
-      badges = Some(Badges(
+      badges = Some(BadgesJson(
         votes = 0,
         viewingMemberVoted = false,
         subscribed = false,
@@ -135,12 +135,12 @@ trait GetBoardCardsTestData extends BoardId { this: Suite =>
       url = Some("https://trello.com/c/RJCblPT4/3-have-a-beer")
     ))
 
-    def assertFieldsDefined(cards: List[Card]): Unit = {
+    def assertFieldsDefined(cards: List[CardJson]): Unit = {
 
       assert(cards.forall{_.badges.isDefined})
       assert(cards.forall{_.closed.isDefined})
       assert(cards.forall{_.dateLastActivity.isDefined})
-      assert(cards.forall{_.descData.isDefined})
+//      assert(cards.forall{_.descData.isDefined})
       assert(cards.forall{_.due.isDefined})
       assert(cards.forall{_.email.isDefined})
       assert(cards.forall{_.ids.idAttachmentCover.isDefined})

@@ -1,10 +1,9 @@
 package pl.pej.trelloilaro.api.data
 
 import org.scalatest.Suite
+import pl.pej.trelloilaro.api.model.BoardJson
 import pl.pej.trelloilaro.api.requestBuilder.GetBoard
-import pl.pej.trelloilaro.api.requestBuilder.builder.board
 import pl.pej.trelloilaro.api.serialization.BoardId
-import pl.pej.trelloilaro.model.Board
 
 /** Triples Request-JSON-Object to be used in tests.
   */
@@ -21,9 +20,9 @@ trait GetBoardTestData extends BoardId { this: Suite =>
                  |}
                  |""".stripMargin
 
-    val example = Board(testBoardFullId)
+    val example = BoardJson(testBoardFullId)
 
-    def assertFieldsDefined(b: Board): Unit = {
+    def assertFieldsDefined(b: BoardJson): Unit = {
 
     }
 
@@ -55,7 +54,7 @@ trait GetBoardTestData extends BoardId { this: Suite =>
                   |  "url" : "https://trello.com/b/kVYrEz26/apitestboard"
                   |  }""".stripMargin
 
-    val example = Board(
+    val example = BoardJson(
       id = testBoardFullId,
       closed = Some(false),
       dateLastActivity = Some("2015-01-13T21:50:47.986Z"),
@@ -75,7 +74,7 @@ trait GetBoardTestData extends BoardId { this: Suite =>
       url = Some("https://trello.com/b/kVYrEz26/apitestboard")
   )
 
-    def assertFieldsDefined(b: Board): Unit = {
+    def assertFieldsDefined(b: BoardJson): Unit = {
       assert(b.closed.isDefined)
       assert(b.dateLastActivity.isDefined)
       assert(b.dateLastView.isDefined)

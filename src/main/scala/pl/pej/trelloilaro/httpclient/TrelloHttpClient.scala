@@ -8,7 +8,7 @@ import spray.client.pipelining
 import scala.concurrent.stm.Source
 import scala.concurrent.{Promise, Future, ExecutionContext}
 import pl.pej.trelloilaro.api.requestBuilder._
-import pl.pej.trelloilaro.model._
+import pl.pej.trelloilaro.api.model._
 import spray.http.{HttpCharsets, HttpCharset, HttpResponse}
 import akka.util.Timeout
 import play.api.libs.json._
@@ -31,15 +31,15 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
     }
   }
 
-  def getBoard(requestBuilder: GetBoard): Future[Board] = {
+  def getBoard(requestBuilder: GetBoard): Future[BoardJson] = {
 
     getStringResponse(requestBuilder).map { json =>
       val parsed = Json.parse(json)
 
       logger.debug("Board parsed: " + Json.prettyPrint(parsed))
 
-      parsed.validate[Board] match {
-        case s: JsSuccess[Board] =>
+      parsed.validate[BoardJson] match {
+        case s: JsSuccess[BoardJson] =>
 
           s.get
         case e: JsError =>
@@ -50,7 +50,7 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
     }
   }
 
-  def getBoardActions(requestBuilder: GetBoardActions): Future[List[Action]] = {
+  def getBoardActions(requestBuilder: GetBoardActions): Future[List[ActionJson]] = {
     getStringResponse(requestBuilder).map { json =>
       val parsed = Json.parse(json)
 
@@ -59,8 +59,8 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
       writer.write(Json.prettyPrint(parsed))
       writer.flush()
 
-      parsed.validate[List[Action]] match {
-        case s: JsSuccess[List[Action]] =>
+      parsed.validate[List[ActionJson]] match {
+        case s: JsSuccess[List[ActionJson]] =>
 
           s.get
         case e: JsError =>
@@ -71,14 +71,14 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
     }
   }
 
-  def getBoardCards(requestBuilder: GetBoardCards): Future[List[Card]] = {
+  def getBoardCards(requestBuilder: GetBoardCards): Future[List[CardJson]] = {
     getStringResponse(requestBuilder).map { json =>
       val parsed = Json.parse(json)
 
       logger.debug("Cards parsed: " + Json.prettyPrint(parsed))
 
-      parsed.validate[List[Card]] match {
-        case s: JsSuccess[List[Card]] =>
+      parsed.validate[List[CardJson]] match {
+        case s: JsSuccess[List[CardJson]] =>
 
           s.get
         case e: JsError =>
@@ -89,19 +89,37 @@ class TrelloHttpClient(apiKey: String) extends TrelloAbstractHttpClient(apiKey) 
     }
   }
 
-  def getBoardChecklists(requestBuilder: GetBoardChecklists): Future[List[Checklist]] = {
+  def getBoardChecklists(requestBuilder: GetBoardChecklists): Future[List[ChecklistJson]] = {
     getStringResponse(requestBuilder).map { json =>
       val parsed = Json.parse(json)
 
       logger.debug("Checklists parsed: " + Json.prettyPrint(parsed))
 
-      parsed.validate[List[Checklist]] match {
-        case s: JsSuccess[List[Checklist]] =>
+      parsed.validate[List[ChecklistJson]] match {
+        case s: JsSuccess[List[ChecklistJson]] =>
 
           s.get
         case e: JsError =>
           val msg = JsError.toFlatJson(e).toString()
           logger.error("Json error while trying to parse a list of Checklists: " + msg)
+          throw JsonParseErrorException(msg)
+      }
+    }
+  }
+
+  def getBoardLists(requestBuilder: GetBoardLists): Future[List[ListJson]] = {
+    getStringResponse(requestBuilder).map { json =>
+      val parsed = Json.parse(json)
+
+      logger.debug("Lists parsed: " + Json.prettyPrint(parsed))
+
+      parsed.validate[List[ListJson]] match {
+        case s: JsSuccess[List[ListJson]] =>
+
+          s.get
+        case e: JsError =>
+          val msg = JsError.toFlatJson(e).toString()
+          logger.error("Json error while trying to parse a list of Lists: " + msg)
           throw JsonParseErrorException(msg)
       }
     }

@@ -1,11 +1,12 @@
 package pl.pej.trelloilaro.api.serialization
 
 import org.scalatest.FunSuite
-import pl.pej.trelloilaro.api.data.{GetBoardChecklistsTestData, GetBoardCardsTestData, GetBoardActionsTestData, GetBoardTestData}
-import pl.pej.trelloilaro.model.{Checklist, Card}
+import pl.pej.trelloilaro.api.data._
+import pl.pej.trelloilaro.api.model.{ChecklistJson, CardJson}
 
 class SerializationSuite extends FunSuite with SerializationBase with GetBoardTestData
-  with GetBoardActionsTestData with GetBoardCardsTestData with GetBoardChecklistsTestData {
+  with GetBoardActionsTestData with GetBoardCardsTestData with GetBoardChecklistsTestData
+  with GetBoardListsTestData {
 
   test("Deserialize minimal Board") {
 
@@ -24,13 +25,21 @@ class SerializationSuite extends FunSuite with SerializationBase with GetBoardTe
     assert(actions === BoardActionsTestDataMinimal.example)
   }
   test("Deserialize primitive fields + badges Board Cards") {
-    val cards: List[Card] = deserializeCards(BoardCardsTestDataPrimitiveFields.json)
+    val cards: List[CardJson] = deserializeCards(BoardCardsTestDataPrimitiveFields.json)
     assert(cards === BoardCardsTestDataPrimitiveFields.example)
   }
 
   test("Deserialize checklists without cards") {
-    val cards: List[Checklist] = deserializeChecklists(BoardChecklistsTestData.json)
+    val cards: List[ChecklistJson] = deserializeChecklists(BoardChecklistsTestData.json)
     assert(cards === BoardChecklistsTestData.example)
   }
 
+  test("Deserialize Board Lists id only") {
+    val lists = deserializeLists(BoardListsTestDataMinimal.json)
+    assert(lists === BoardListsTestDataMinimal.example)
+  }
+  test("Deserialize full Board Lists") {
+    val lists = deserializeLists(BoardListsTestData.json)
+    assert(lists === BoardListsTestData.example)
+  }
 }

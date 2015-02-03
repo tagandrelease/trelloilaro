@@ -1,4 +1,4 @@
-package pl.pej.trelloilaro.model
+package pl.pej.trelloilaro.api.model
 
 import play.api.libs.json.{JsNull, JsSuccess, Reads, JsPath}
 

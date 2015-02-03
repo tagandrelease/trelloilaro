@@ -4,14 +4,15 @@ import scala._
 import com.typesafe.sbt.SbtAtmosPlay.atmosPlaySettings
 
 object BuildSettings {
-  val buildVersion = "0.1"
+  val buildVersion = "0.2"
   val buildScalaVersion = "2.11.2"
 
-  val buildSettings = Defaults.defaultSettings ++ Seq(
+  val buildSettings = Defaults.coreDefaultSettings ++ Seq(
     version := buildVersion,
     scalaVersion := buildScalaVersion,
     libraryDependencies ++= Dependencies.list,
-    resolvers ++= Resolvers.list
+    resolvers ++= Resolvers.list,
+    organization := "org.tejo"
   )
 
 }
@@ -27,16 +28,10 @@ object Resolvers {
 object Dependencies {
 
   val akkaVersion = "2.3.6"
-  val musterVer = "0.3.0"
 
   val sprayClient = "io.spray" % "spray-client_2.11" % "1.3.2"
 
   object Serialization {
-//    lazy val musterJawn = "org.json4s" %% "muster-codec-jawn" % musterVer
-//    lazy val musterJson4s= "org.json4s" %% "muster-codec-json4s" % musterVer
-//    lazy val musterString = "org.json4s" %% "muster-codec-string" % musterVer
-//
-//    lazy val bundle = Seq(musterJawn, musterJson4s, musterString)
       lazy val playJson = "com.typesafe.play" % "play-json_2.11" % "2.4.0-M2"
 
       lazy val bundle = Seq(playJson)

@@ -1,11 +1,23 @@
-package pl.pej.trelloilaro.model.card
+package pl.pej.trelloilaro.api.model.card
 
-import pl.pej.trelloilaro.model.JsonUtil
+import pl.pej.trelloilaro.api.model.JsonUtil
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 
-case class IdsInCard(
+/** Class created because of 22 arguments scala limit
+  * to contain identifiers in cards
+  *
+  * @param idAttachmentCover
+  * @param idBoard
+  * @param idChecklists
+  * @param idLabels
+  * @param idList
+  * @param idMembers
+  * @param idMembersVoted
+  * @param idShort
+  */
+case class IdsInCardJson(
                       idAttachmentCover: Option[Option[String]] = None,
                       idBoard: Option[String] = None,
                       idChecklists: Option[List[String]] = None,
@@ -16,8 +28,8 @@ case class IdsInCard(
                       idShort: Option[Int] = None
                       )
 
-object IdsInCard extends JsonUtil {
-  implicit val idsInCardReads: Reads[IdsInCard] = (
+object IdsInCardJson extends JsonUtil {
+  implicit val idsInCardReads: Reads[IdsInCardJson] = (
     (__ \ "idAttachmentCover").readNullableNullable[String] and
       (__ \ "idBoard").readNullable[String] and
       (__ \ "idChecklists").readNullable[List[String]] and
@@ -26,5 +38,5 @@ object IdsInCard extends JsonUtil {
       (__ \ "idMembers").readNullable[List[String]] and
       (__ \ "idMembersVoted").readNullable[List[String]] and
       (__ \ "idShort").readNullable[Int]
-    )(IdsInCard.apply _)
+    )(IdsInCardJson.apply _)
 }

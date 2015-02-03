@@ -2,23 +2,22 @@ package pl.pej.trelloilaro.api.it
 
 import com.typesafe.scalalogging.LazyLogging
 import org.scalatest.FunSuite
+import pl.pej.trelloilaro.api.ApiTestBase
 import pl.pej.trelloilaro.api.data.GetBoardTestData
+import pl.pej.trelloilaro.api.model.BoardJson
 import pl.pej.trelloilaro.api.requestBuilder.GetBoard
 import pl.pej.trelloilaro.api.requestBuilder.builder.action.{ActionField, Actions}
 import pl.pej.trelloilaro.api.requestBuilder.builder.board.BoardField
-import scala.concurrent.Future
-import spray.http.HttpResponse
-import scala.concurrent.{Future, Await}
+
 import scala.concurrent.duration._
-import pl.pej.trelloilaro.model.Board
-import pl.pej.trelloilaro.api.ApiTestBase
+import scala.concurrent.{Await, Future}
 
 class GetBoardSuite extends FunSuite with ApiTestBase with GetBoardTestData with LazyLogging {
 
-  def testHelper(request: GetBoard)(assertions: Board => Unit): Board = {
-    val responseFuture: Future[Board] = client.getBoard(request)
+  def testHelper(request: GetBoard)(assertions: BoardJson => Unit): BoardJson = {
+    val responseFuture: Future[BoardJson] = client.getBoard(request)
 
-    val response: Board = Await.result(responseFuture, 10 seconds)
+    val response: BoardJson = Await.result(responseFuture, 10 seconds)
     assert(response.id === testBoardFullId)
 
     assertions(response)
@@ -58,7 +57,7 @@ class GetBoardSuite extends FunSuite with ApiTestBase with GetBoardTestData with
 
     val request = getBoard.withActionMemberCreator(true).withLimit(3).withActions(Actions.all).withActionFields(ActionField.`type`)
 
-    val board: Board = testHelper(request){ b =>
+    val board: BoardJson = testHelper(request){ b =>
 
     }
   }

@@ -1,8 +1,8 @@
-package pl.pej.trelloilaro.model.card
+package pl.pej.trelloilaro.api.model.card
 
 import play.api.libs.json.Json
 
-case class Badges(
+case class BadgesJson(
                    votes: Int,
                    viewingMemberVoted: Boolean,
                    subscribed: Boolean,
@@ -14,7 +14,7 @@ case class Badges(
                    description: Boolean,
                    due: Option[String]
                    )
-object Badges {
-  implicit val badgesFormat = Json.format[Badges]
+object BadgesJson {
+  implicit val badgesFormat = Json.format[BadgesJson]
 }
 

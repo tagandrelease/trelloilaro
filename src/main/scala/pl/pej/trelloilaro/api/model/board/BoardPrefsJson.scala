@@ -1,10 +1,10 @@
-package pl.pej.trelloilaro.model.board
+package pl.pej.trelloilaro.api.model.board
 
 import play.api.libs.json.Json
 import play.api.libs.functional.syntax._
 
 
-case class BoardPrefs(
+case class BoardPrefsJson(
                        permissionLevel: String,
                        voting: String,
                        comments: String,
@@ -23,6 +23,6 @@ case class BoardPrefs(
                        canInvite: Boolean
                        )
 
-object BoardPrefs {
-  implicit val boardPrefsFormat = Json.format[BoardPrefs]
+object BoardPrefsJson {
+  implicit val boardPrefsFormat = Json.format[BoardPrefsJson]
 }

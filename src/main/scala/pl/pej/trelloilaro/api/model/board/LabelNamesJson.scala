@@ -1,9 +1,9 @@
-package pl.pej.trelloilaro.model.board
+package pl.pej.trelloilaro.api.model.board
 
 import play.api.libs.json.Json
 import play.api.libs.functional.syntax._
 
-case class LabelNames(
+case class LabelNamesJson(
                        yellow: String,
                        red: String,
                        purple: String,
@@ -11,6 +11,6 @@ case class LabelNames(
                        green: String,
                        blue: String
                        )
-object LabelNames {
-  implicit val labelNamesFormat = Json.format[LabelNames]
+object LabelNamesJson {
+  implicit val labelNamesFormat = Json.format[LabelNamesJson]
 }

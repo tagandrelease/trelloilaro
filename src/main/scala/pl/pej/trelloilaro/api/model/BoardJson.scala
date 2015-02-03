@@ -1,11 +1,9 @@
-package pl.pej.trelloilaro.model
+package pl.pej.trelloilaro.api.model
 
-
-import pl.pej.trelloilaro.model.board.{LabelNames, BoardPrefs}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class Board(
+case class BoardJson(
                   id: String,
                   closed: Option[Boolean] = None,
                   dateLastActivity: Option[String] = None,
@@ -27,17 +25,17 @@ case class Board(
 //                  starred: null
 //                  subscribed: null
 
-                  actions: Option[List[Action]] = None
+                  actions: Option[List[ActionJson]] = None
 //                  cards: List[Card]
                 )
 
-object Board extends JsonUtil {
+object BoardJson extends JsonUtil {
 //  implicit val boardFormat = Json.format[Board]
 
 
-  implicit val boardWrites: Writes[Board] = Json.writes[Board]
+  implicit val boardWrites: Writes[BoardJson] = Json.writes[BoardJson]
 
-  implicit val boardReads: Reads[Board] = (
+  implicit val boardReads: Reads[BoardJson] = (
       (__ \ "id").read[String] and //.map(BoardId(_)) and
       (__ \ "closed").readNullable[Boolean] and
       (__ \ "dateLastActivity").readNullable[String] and
@@ -56,13 +54,13 @@ object Board extends JsonUtil {
       (__ \ "shortUrl").readNullable[String] and
       (__ \ "url").readNullable[String] and
 
-      (__ \ "actions").readNullable[List[Action]]
+      (__ \ "actions").readNullable[List[ActionJson]]
 //      (__ \ "cards").readNullable[List[Action]].map(_.getOrElse(Nil)) and
 
-    )(Board.apply _)
+    )(BoardJson.apply _)
 
 
-  implicit val boardFormat: Format[Board] = Format(boardReads, boardWrites)
+  implicit val boardFormat: Format[BoardJson] = Format(boardReads, boardWrites)
 
 }
 
