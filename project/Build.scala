@@ -4,7 +4,7 @@ import scala._
 import com.typesafe.sbt.SbtAtmosPlay.atmosPlaySettings
 
 object BuildSettings {
-  val buildVersion = "0.2"
+  val buildVersion = "0.0.3"
   val buildScalaVersion = "2.11.2"
 
   val buildSettings = Defaults.coreDefaultSettings ++ Seq(
@@ -20,26 +20,24 @@ object BuildSettings {
 object Resolvers {
   val spray = "spray repo" at "http://repo.spray.io"
 
-  lazy val jawn = "Jawn" at "http://dl.bintray.com/non/maven"
-
-  val list = List(spray, jawn)
+  val list = List(spray)
 }
 
 object Dependencies {
 
   val akkaVersion = "2.3.6"
 
-  val sprayClient = "io.spray" % "spray-client_2.11" % "1.3.2"
+  val sprayClient = "io.spray" % "spray-client_2.11" % "1.3.2" % "test"
 
   object Serialization {
-      lazy val playJson = "com.typesafe.play" % "play-json_2.11" % "2.4.0-M2"
+      lazy val playJson = "com.typesafe.play" %% "play-json" % "2.4.0-M2"
 
       lazy val bundle = Seq(playJson)
   }
 
-  val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaVersion
-  val akkaTest = "com.typesafe.akka" %% "akka-testkit" % akkaVersion
-  val akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
+  val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaVersion  % "test"
+  val akkaTest = "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test"
+  val akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % akkaVersion % "test"
   val ficus = "net.ceedubs" %% "ficus" % "1.1.1"
 
   val akka = akkaActor :: akkaTest :: akkaSlf4j :: Nil
